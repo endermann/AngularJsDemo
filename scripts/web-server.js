@@ -23,9 +23,9 @@ function main(argv) {
 
 function escapeHtml(value) {
   return value.toString().
-    replace('<', '&lt;').
-    replace('>', '&gt;').
-    replace('"', '&quot;');
+      replace('<', '&lt;').
+      replace('>', '&gt;').
+      replace('"', '&quot;');
 }
 
 function createServlet(Class) {
@@ -94,7 +94,7 @@ StaticServlet.MimeMap = {
   'jpeg': 'image/jpeg',
   'gif': 'image/gif',
   'png': 'image/png',
-  'svg': 'image/svg+xml'
+  'svg': 'image/svg+xml'
 };
 
 StaticServlet.prototype.handleRequest = function(req, res) {
@@ -116,7 +116,8 @@ StaticServlet.prototype.handleRequest = function(req, res) {
 
   fs.stat(path, function(err, stat) {
     if (err)
-      return self.sendMissing_(req, res, path);
+      return self.sendDefault_(req, res, path);
+//      return self.sendMissing_(req, res, path);
     if (stat.isDirectory())
       return self.sendDirectory_(req, res, path);
     return self.sendFile_(req, res, path);
@@ -124,21 +125,21 @@ StaticServlet.prototype.handleRequest = function(req, res) {
 }
 
 StaticServlet.prototype.attemptingToAccessOutsideLocalAppPath = function(pathParts) {
-    if (pathParts[0] !== '.' ||  pathParts[1] !== 'app')
+  if (pathParts[0] !== '.' ||  pathParts[1] !== 'app')
+    return true;
+
+  for (var idx = 0; idx < pathParts.length; idx++) {
+    if (pathParts[idx].indexOf("..") != -1) {
       return true;
-
-    for (var idx = 0; idx < pathParts.length; idx++) {
-      if (pathParts[idx].indexOf("..") != -1) {
-        return true;
-      }
     }
+  }
 
-    return false;
+  return false;
 };
 
 StaticServlet.prototype.sendError_ = function(req, res, error) {
   res.writeHead(500, {
-      'Content-Type': 'text/html'
+    'Content-Type': 'text/html'
   });
   res.write('<!doctype html>\n');
   res.write('<title>Internal Server Error</title>\n');
@@ -151,15 +152,15 @@ StaticServlet.prototype.sendError_ = function(req, res, error) {
 StaticServlet.prototype.sendMissing_ = function(req, res, path) {
   path = path.substring(1);
   res.writeHead(404, {
-      'Content-Type': 'text/html'
+    'Content-Type': 'text/html'
   });
   res.write('<!doctype html>\n');
   res.write('<title>404 Not Found</title>\n');
   res.write('<h1>Not Found</h1>');
   res.write(
-    '<p>The requested URL ' +
-    escapeHtml(path) +
-    ' was not found on this server.</p>'
+      '<p>The requested URL ' +
+          escapeHtml(path) +
+          ' was not found on this server.</p>'
   );
   res.end();
   util.puts('404 Not Found: ' + path);
@@ -168,14 +169,14 @@ StaticServlet.prototype.sendMissing_ = function(req, res, path) {
 StaticServlet.prototype.sendForbidden_ = function(req, res, path) {
   path = path.substring(1);
   res.writeHead(403, {
-      'Content-Type': 'text/html'
+    'Content-Type': 'text/html'
   });
   res.write('<!doctype html>\n');
   res.write('<title>403 Forbidden</title>\n');
   res.write('<h1>Forbidden</h1>');
   res.write(
-    '<p>You do not have permission to access ' +
-    escapeHtml(path) + ' on this server.</p>'
+      '<p>You do not have permission to access ' +
+          escapeHtml(path) + ' on this server.</p>'
   );
   res.end();
   util.puts('403 Forbidden: ' + path);
@@ -183,19 +184,41 @@ StaticServlet.prototype.sendForbidden_ = function(req, res, path) {
 
 StaticServlet.prototype.sendRedirect_ = function(req, res, redirectUrl) {
   res.writeHead(301, {
-      'Content-Type': 'text/html',
-      'Location': redirectUrl
+    'Content-Type': 'text/html',
+    'Location': redirectUrl
   });
   res.write('<!doctype html>\n');
   res.write('<title>301 Moved Permanently</title>\n');
   res.write('<h1>Moved Permanently</h1>');
   res.write(
-    '<p>The document has moved <a href="' +
-    redirectUrl +
-    '">here</a>.</p>'
+      '<p>The document has moved <a href="' +
+          redirectUrl +
+          '">here</a>.</p>'
   );
   res.end();
   util.puts('301 Moved Permanently: ' + redirectUrl);
+};
+
+StaticServlet.prototype.sendDefault_ = function(req, res) {
+  var self = this;
+  var path = './index.html'
+
+  var file = fs.createReadStream(path);
+  res.writeHead(200, {
+    'Content-Type': StaticServlet.
+        MimeMap[path.split('.').pop()] || 'text/plain'
+  });
+  if (req.method === 'HEAD') {
+    res.end();
+  } else {
+    file.on('data', res.write.bind(res));
+    file.on('close', function() {
+      res.end();
+    });
+    file.on('error', function(error) {
+      self.sendError_(req, res, error);
+    });
+  }
 };
 
 StaticServlet.prototype.sendFile_ = function(req, res, path) {
@@ -203,7 +226,7 @@ StaticServlet.prototype.sendFile_ = function(req, res, path) {
   var file = fs.createReadStream(path);
   res.writeHead(200, {
     'Content-Type': StaticServlet.
-      MimeMap[path.split('.').pop()] || 'text/plain'
+        MimeMap[path.split('.').pop()] || 'text/plain'
   });
   if (req.method === 'HEAD') {
     res.end();
@@ -290,8 +313,8 @@ StaticServlet.prototype.writeDirectoryIndex_ = function(req, res, path, files) {
   files.forEach(function(fileName) {
     if (fileName.charAt(0) !== '.') {
       res.write('<li><a href="' +
-        escapeHtml(fileName) + '">' +
-        escapeHtml(fileName) + '</a></li>');
+          escapeHtml(fileName) + '">' +
+          escapeHtml(fileName) + '</a></li>');
     }
   });
   res.write('</ol>');
