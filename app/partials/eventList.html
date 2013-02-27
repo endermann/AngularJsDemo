@@ -1,0 +1,11 @@
+<div>
+    <h1>Events</h1>
+    <hr/>
+    <div ng-repeat="event in events">
+        <div class="eventName"><h2><a href="#/event/{{event.id}}">{{event.name}}</a></h2></div>
+        <div><div class="eventLabel">Date:</div><div class="eventDetail">{{event.date}}</div></div>
+        <div><div class="eventLabel">Time:</div> <div class="eventDetail">{{event.time}}</div></div>
+        <div><div class="eventLabel">Location:</div> <div class="eventDetail">{{event.location.address}}</div></div>
+        <div><div class="eventLabel">&nbsp;</div> <div class="eventDetail">{{event.location.city}}, {{event.location.province}}</div></div>
+    </div>
+</div>
