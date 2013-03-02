@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span4">
+        <div class="span3">
             <img src="http://www.gravatar.com/avatar/43ca771e54bfa5827300ec6c427426a3.jpg?s=200"/>
         </div>
         <div class="span8">
@@ -8,14 +8,14 @@
                 <label for="userName">User Name:</label>
                 <input id="userName" type="text" placeholder="Username" ng-model="user.name">
                 <label for="password">Password:</label>
-                <input id="password" type="text" placeholder="Password" ng-model="event.date">
+                <input id="password" type="text" placeholder="Password" ng-model="user.password">
             </fieldset>
             <div style="margin-top:15px">
                 <fieldset>
-                    <label for="eventTime">Time:</label>
-                    <input id="eventTime" type="text" placeholder="start and end time..." ng-model="event.time">
-                    <label for="eventLocation">Location:</label>
-                    <input id="eventLocation" type="text" placeholder="Location of event..." ng-model="event.location">
+                    <label for="emailAddress">Email Address:</label>
+                    <input id="emailAddress" type="text" placeholder="Email Address" ng-model="user.emailAddress">
+                    <label for="eventLocation">Bio:</label>
+                    <input id="eventLocation" type="text" placeholder="Bio" ng-model="user.bio">
                 </fieldset>
             </div>
         </div>

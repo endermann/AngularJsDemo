@@ -7,6 +7,7 @@ angular.module('eventsApp', ['eventsApp.filters', 'eventsApp.services', 'eventsA
     $routeProvider.when('/events/:eventId/sessions/new', {templateUrl: '/partials/newSession.html', controller: NewSessionController});
     $routeProvider.when('/event/:eventId', {templateUrl: '/partials/event.html', controller: EventController});
     $routeProvider.when('/events/new', {templateUrl: '/partials/newEvent.html', controller: NewEventController});
+    $routeProvider.when('/register', {templateUrl: '/partials/editProfile.html', controller: EditProfileController});
     $routeProvider.otherwise({redirectTo: '/view1'});
     $locationProvider.html5Mode(true);
   }]);
