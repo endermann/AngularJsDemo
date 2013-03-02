@@ -14,4 +14,9 @@ angular.module('eventsApp.services', [])
                 {id: 3, name: 'Agile Roundtable',  date: '04/02/2013', time: '2:00pm - 5:00pm', location: {address: "10 Downing St", city: "London", province: "UK"}, imageUrl: 'http://2.bp.blogspot.com/_gLnOWFiJhI8/SzfU7icq4SI/AAAAAAAAAAw/uPYwoNfPQHU/S1600-R/cart.jpg' }
                 ]
         };
-    });
+    })
+    .factory('UsersResource', ['$resource', function ($resource) {
+        return $resource('Users', {}, {
+
+        });
+    } ]);;

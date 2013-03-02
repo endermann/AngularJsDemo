@@ -36,4 +36,4 @@ NewSessionController.$inject = ['$scope', 'eventData', '$routeParams'];
 function EditProfileController($scope) {
 
 }
-event.$inject = ['$scope'];
+EditProfileController.$inject = ['$scope'];
