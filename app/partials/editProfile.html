@@ -1,7 +1,23 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4">
-            <img src=""/>
+            <img src="http://www.gravatar.com/avatar/43ca771e54bfa5827300ec6c427426a3.jpg?s=200"/>
+        </div>
+        <div class="span8">
+            <fieldset>
+                <label for="userName">User Name:</label>
+                <input id="userName" type="text" placeholder="Username" ng-model="user.name">
+                <label for="password">Password:</label>
+                <input id="password" type="text" placeholder="Password" ng-model="event.date">
+            </fieldset>
+            <div style="margin-top:15px">
+                <fieldset>
+                    <label for="eventTime">Time:</label>
+                    <input id="eventTime" type="text" placeholder="start and end time..." ng-model="event.time">
+                    <label for="eventLocation">Location:</label>
+                    <input id="eventLocation" type="text" placeholder="Location of event..." ng-model="event.location">
+                </fieldset>
+            </div>
         </div>
     </div>
 </div>
