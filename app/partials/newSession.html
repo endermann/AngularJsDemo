@@ -1,0 +1,27 @@
+<div class="container" >
+    <h1>New Session</h1>
+    <hr/>
+    <form>
+        <fieldset>
+        <label for="sessionName">Session Name:</label>
+        <input id="sessionName" type="text" ng-model="session.name">
+        <label for="sessionTrack">Track:</label>
+        <select id="sessionTrack" ng-model="session.track">
+            <option value="1">Web</option>
+            <option value="2">Windows</option>
+            <option value="3">CSS</option>
+        </select>
+        <label for="sessionDuration">Duration:</label>
+        <select id="sessionDuration">
+            <option value="1">Half Hour</option>
+            <option value="2">Hour</option>
+            <option value="3">Half Day</option>
+            <option value="4">Full Day</option>
+        </select>
+        <label for="sessionAbstract">Abstract</label>
+        <input id="sessionAbstract" type="text" ng-model="session.abstract" />
+        </fieldset>
+        <button type="button" class="btn btn-primary" ng-click="saveSession(session)">Save</button>
+
+    </form>
+</div>

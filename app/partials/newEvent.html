@@ -1,0 +1,18 @@
+<div class="container" >
+    <h1>New Event</h1>
+    <hr/>
+    <form>
+        <fieldset>
+        <label for="eventName">Event Name:</label>
+        <input id="eventName" type="text" placeholder="Name of your event..." ng-model="event.name">
+        <label for="eventDate">Date:</label>
+        <input id="eventDate" type="text" placeholder="format (mm/dd/yyyy)..." ng-model="event.date">
+        <label for="eventTime">Time:</label>
+        <input id="eventTime" type="text" placeholder="start and end time..." ng-model="event.time">
+        <label for="eventLocation">Location:</label>
+        <input id="eventLocation" type="text" placeholder="Location of event..." ng-model="event.location">
+        </fieldset>
+        <button type="button" class="btn btn-primary" ng-click="saveEvent(event)">Save</button>
+
+    </form>
+</div>

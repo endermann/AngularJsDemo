@@ -39,6 +39,7 @@ body {
     width: 75px;
     float:left;
     clear:left;
+    margin-left:20px;
 }
 .eventDetail {
     font-weight: bold;
