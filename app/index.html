@@ -7,13 +7,30 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-    <ul class="menu">
-        <li><a href="/events">Events</a></li>
-        <li><a href="/view2">view2</a></li>
-        <li><a href="/events/new">Add New Event</a></li>
-    </ul>
+    <div class="container">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav">
+                    <li><a href="/events">Events</a></li>
+                    <li><a href="/events/new">Create Event</a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            </div>
 
-    <div ng-view style="width:960px;padding-left:25px;"></div>
+        </div>
+        <!--<ul class="menu">-->
+            <!--<li><a href="/events">Events</a></li>-->
+            <!--<li><a href="/events/new">Create Event</a></li>-->
+        <!--<ul class="menu">&ndash;&gt;-->
+            <!--<li><a href="/events">Events</a></li>-->
+            <!--<li><a href="/events/new">Create Event</a></li>-->
+        <!--</ul>-->
+
+        <div ng-view style="width:960px;padding-left:25px;"></div>
+    </div>
 
 
     <script src="/lib/angular/angular.js"></script>
