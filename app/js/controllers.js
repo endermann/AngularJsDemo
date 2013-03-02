@@ -12,14 +12,19 @@ function EventController($scope, $routeParams, eventData) {
 EventController.$inject = ['$scope', '$routeParams', 'eventData'];
 
 
-function NewEventController($scope, eventData) {
+function NewEventController($scope, eventData, $location) {
     $scope.event = {};
 
     $scope.saveEvent = function(event) {
         eventData.events.push(event);
     }
+
+    $scope.cancelEvent = function() {
+        console.log($location.$$url);
+        $location.url("/events");
+    }
 }
-NewEventController.$inject = ['$scope', 'eventData'];
+NewEventController.$inject = ['$scope', 'eventData', '$location'];
 
 
 function NewSessionController($scope, eventData, $routeParams) {
