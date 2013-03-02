@@ -3,16 +3,29 @@
     <hr/>
     <form>
         <fieldset>
-        <label for="eventName">Event Name:</label>
-        <input id="eventName" type="text" placeholder="Name of your event..." ng-model="event.name">
-        <label for="eventDate">Date:</label>
-        <input id="eventDate" type="text" placeholder="format (mm/dd/yyyy)..." ng-model="event.date">
-        <label for="eventTime">Time:</label>
-        <input id="eventTime" type="text" placeholder="start and end time..." ng-model="event.time">
-        <label for="eventLocation">Location:</label>
-        <input id="eventLocation" type="text" placeholder="Location of event..." ng-model="event.location">
+            <label for="eventName">Event Name:</label>
+            <input id="eventName" type="text" placeholder="Name of your event..." ng-model="event.name" />
+            <label for="eventDate">Date:</label>
+            <input id="eventDate" type="text" placeholder="format (mm/dd/yyyy)..." ng-model="event.date" />
+            <label for="eventTime">Time:</label>
+            <input id="eventTime" type="text" placeholder="start and end time..." ng-model="event.time" />
+            <label for="eventLocation">Location:</label>
+            <input id="eventLocation" type="text" placeholder="Address of event..." ng-model="event.location" />
+            <br />
+            <input id="eventCity" type="text" class="input-small" placeholder="City..." ng-model="event.city" />
+            <input id="eventProvince" type="text" class="input-small" placeholder="Province..." ng-model="event.province" />
+
+            <label for="eventImageUrl">Image:</label>
+            <input id="eventImageUrl" type="text" class="input-xlarge" placeholder="Url of image..." ng-model="event.imageUrl" />
+
         </fieldset>
+
+        <img data-ng-src="{{event.imageUrl}}" src="" />
+        <br />
+        <br />
+
         <button type="button" class="btn btn-primary" ng-click="saveEvent(event)">Save</button>
+        <button type="button" class="btn btn-info" ng-click="cancelEvent()">Cancel</button>
 
     </form>
 </div>
