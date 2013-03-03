@@ -43,7 +43,7 @@ angular.module('eventsApp.services', [])
         return {
             getCurrentUserName: function() { return currentUser.userName },
             getCurrentUser: function() { return cloneObject(currentUser);  },
-            setCurrentUser: function(user) { currentUser = cloneObject(user); console.log(currentUser); console.log(user); }
+            setCurrentUser: function(user) { currentUser = cloneObject(user); }
         };
     });
 

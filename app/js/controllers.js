@@ -8,6 +8,9 @@ function MainMenuController($scope, authenticationService) {
         var currentUser = authenticationService.getCurrentUser();
         return !!currentUser && !!currentUser.userName;
     };
+    $scope.logout = function () {
+        authenticationService.setCurrentUser({});
+    };
 }
 MainMenuController.$inject = ['$scope', 'authenticationService'];
 
@@ -29,7 +32,6 @@ function EventController($scope, $routeParams, eventData, $location, durations) 
     //$scope.eventTrack = getDuration(event.duration);
 
     $scope.createNewSession = function(eventId) {
-        console.log('making new session');
         $location.url("/events/" + eventId + "/sessions/new")
     }
 }
@@ -41,7 +43,6 @@ function NewEventController($scope, eventData, $location) {
 
     $scope.saveEvent = function(event, form) {
         if(form.$valid) {
-            console.log(event);
             eventData.events.push(event);
         }
     }

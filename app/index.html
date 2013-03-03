@@ -7,33 +7,42 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
-    <div class="container">
-        <div class="navbar" ng-controller="MainMenuController">
-            <div class="navbar-inner">
-                <ul class="nav">
-                    <li><a href="/events">Events</a></li>
-                    <li><a href="/events/new">Create Event</a></li>
-                </ul>
-                <ul class="nav pull-right" ng-hide="isAuthenticated()">
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                </ul>
-                <ul class="nav pull-right" ng-show="isAuthenticated()">
-                    <li><a href="/editProfile">{{user.name}}</a></li>
-                </ul>
-            </div>
+<div class="container">
+    <div class="navbar" ng-controller="MainMenuController">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li><a href="/events">Events</a></li>
+                <li><a href="/events/new">Create Event</a></li>
+            </ul>
+            <ul class="nav pull-right" ng-hide="isAuthenticated()">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+            <ul class="nav pull-right" ng-show="isAuthenticated()">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.name}}</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/editProfile">Edit Profile</a></li>
+                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <div ng-view style="padding-left:20px; padding-right:20px"></div>
     </div>
+    <div ng-view style="padding-left:20px; padding-right:20px"></div>
+</div>
 
 
-    <script src="/lib/angular/angular.js"></script>
-    <script src="/lib/angular/angular-resource.min.js"></script>
-    <script src="/lib/underscore-1.4.4.min.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="/js/services.js"></script>
-    <script src="/js/controllers.js"></script>
-    <script src="/js/filters.js"></script>
-    <script src="/js/directives.js"></script>
+<script src="/lib/angular/angular.js"></script>
+<script src="/lib/angular/angular-resource.min.js"></script>
+<script src="/lib/underscore-1.4.4.min.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/services.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/filters.js"></script>
+<script src="/js/directives.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
 </body>
 </html>
