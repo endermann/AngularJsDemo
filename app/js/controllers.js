@@ -1,26 +1,41 @@
 'use strict';
 
-function EventListController($scope, eventData) {
+function EventListController($scope, eventData, $location) {
     $scope.events = eventData.events;
+
+    $scope.navigateToDetails = function(event) {
+        $location.url('/event/' + event.id);
+    }
 }
-EventListController.$inject = ['$scope', 'eventData'];
+EventListController.$inject = ['$scope', 'eventData', '$location'];
 
 
-function EventController($scope, $routeParams, eventData) {
+function EventController($scope, $routeParams, eventData, $location, durations) {
     $scope.event = _.findWhere(eventData.events, {id: parseInt($routeParams.eventId)});
+    $scope.getDuration = function(duration) {
+        return durations.getDuration(duration);
+    }
+    //$scope.eventTrack = getDuration(event.duration);
+
+    $scope.createNewSession = function(eventId) {
+        console.log('making new session');
+        $location.url("/events/" + eventId + "/sessions/new")
+    }
 }
-EventController.$inject = ['$scope', '$routeParams', 'eventData'];
+EventController.$inject = ['$scope', '$routeParams', 'eventData', '$location', 'durations'];
 
 
 function NewEventController($scope, eventData, $location) {
     $scope.event = {};
 
-    $scope.saveEvent = function(event) {
-        eventData.events.push(event);
+    $scope.saveEvent = function(event, form) {
+        if(form.$valid) {
+            console.log(event);
+            eventData.events.push(event);
+        }
     }
 
     $scope.cancelEvent = function() {
-        console.log($location.$$url);
         $location.url("/events");
     }
 }
