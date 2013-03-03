@@ -1,10 +1,5 @@
 'use strict';
 
-/* Services */
-
-
-// Demonstrate how to register services
-// In this case it is a simple value service.
 angular.module('eventsApp.services', [])
     .factory('eventData', function() {
         return {
@@ -15,8 +10,23 @@ angular.module('eventsApp.services', [])
                 ]
         };
     })
-    .factory('UsersResource', ['$resource', function ($resource) {
-        return $resource('Users', {}, {
+    .factory('userResource', ['$resource', function ($resource) {
+        var service =  $resource('user/:userName.json', {userName: '@userName'}, { });
 
-        });
-    } ]);;
+        service.queryAll = function() { service.query({all:true}) };
+
+        return service;
+    }])
+    .factory('authenticationService', function() {
+        var currentUser = {};
+
+        function cloneObject(object) {
+            return JSON.parse(JSON.stringify(object));
+        };
+
+        return {
+            getCurrentUserName: function() { return currentUser.userName },
+            getCurrentUser: function() { return cloneObject(currentUser);  },
+            setCurrentUser: function(user) { currentUser = cloneObject(user); console.log(currentUser); console.log(user); }
+        };
+    });

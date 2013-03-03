@@ -8,15 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="navbar">
+        <div class="navbar" ng-controller="MainMenuController">
             <div class="navbar-inner">
                 <ul class="nav">
                     <li><a href="/events">Events</a></li>
                     <li><a href="/events/new">Create Event</a></li>
                 </ul>
-                <ul class="nav pull-right">
+                <ul class="nav pull-right" ng-hide="isAuthenticated()">
                     <li><a href="/login">Login</a></li>
                     <li><a href="/register">Register</a></li>
+                </ul>
+                <ul class="nav pull-right" ng-show="isAuthenticated()">
+                    <li><a href="/editProfile">{{user.name}}</a></li>
                 </ul>
             </div>
 
@@ -34,6 +37,7 @@
 
 
     <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-resource.min.js"></script>
     <script src="/lib/underscore-1.4.4.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/services.js"></script>
