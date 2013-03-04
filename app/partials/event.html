@@ -16,15 +16,9 @@
     <ul class="thumbnails">
         <li ng-repeat="session in event.sessions" class="span11">
             <div class="well" ng-click="navigateToDetails(event)">
-                <!--<div class="row"><span class="span6"><h2>{{event.name}}</h2></span></div>-->
-                <!--<div class="row"><span class="span1">Date:</span><span>{{event.date}}</span></div>-->
-                <!--<div class="row"><span class="span1">Time:</span> <span>{{event.time}}</span></div>-->
-                <!--<div class="row"><span class="span1">Location:</span> <span>{{event.location.address}}</span></div>-->
-                <!--<div class="row"><span class="span1">&nbsp;</span> <span>{{event.location.city}}, {{event.location.province}}</span></div>-->
                 <h4>{{session.name}}</h4>
                 <div class="row">
-                    <span class="span1 text-right">Track:</span><span class="span2">{{session.track}}</span>
-                    <span class="span1 text-right">Duration:</span><span class="span2">{{getDuration(session.duration)}}</span>
+                    <span class="span3">Duration: {{getDuration(session.duration)}}</span>
                 </div>
                 <p>{{session.abstract}}</p>
             </div>
