@@ -3,7 +3,7 @@
     <hr/>
     <ul class="thumbnails">
         <li ng-repeat="event in events" class="span5">
-            <div class="well" ng-click="navigateToDetails(event)">
+            <div class="well hoverwell" ng-click="navigateToDetails(event)">
                 <div class="row"><span class="span6"><h2>{{event.name}}</h2></span></div>
                 <div class="row"><span class="span1">Date:</span><span>{{event.date}}</span></div>
                 <div class="row"><span class="span1">Time:</span> <span>{{event.time}}</span></div>

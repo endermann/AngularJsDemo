@@ -1,5 +1,5 @@
 /* app css stylesheet */
-.well:hover {
+.hoverwell:hover {
   background-color: #52575c;
   cursor: pointer;
 }

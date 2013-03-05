@@ -1,18 +1,27 @@
 <div id="me">
     <img data-ng-src="{{event.imageUrl}}" alt="{{event.name}}" />
-    <div class="span7">
-        <div class="eventName"><h2>{{event.name}}</h2></div>
-        <div class="eventLabel">Date:</div><div class="eventDetail">{{event.date}}</div>
-        <div class="eventLabel">Time:</div> <div class="eventDetail">{{event.time}}</div>
-        <div class="eventLabel">Location:</div> <div class="eventDetail">{{event.location.address}}</div>
-        <div class="eventLabel">&nbsp;</div> <div class="eventDetail">{{event.location.city}}, {{event.location.province}}</div>
+    <div class="row">
+        <div class="span11"><h2>{{event.name}}</h2></div>
     </div>
-    <div class="span4">
-        <button type="button" style="margin-top:25px" class="btn btn-primary" ng-click="createNewSession(event.id)">Create New Session</button>
+    <div class="row">
+        <div class="span3">
+            <div><strong>Date:</strong> {{event.date}}</div>
+            <div><strong>Time:</strong> {{event.time}}</div>
+        </div>
+        <div class="span4">
+            <address>
+                <strong>Address:</strong><br />
+                {{event.location.address}}<br />
+                {{event.location.city}}, {{event.location.province}}
+            </address>
+        </div>
+
     </div>
-    <div style="clear:both" />
-    <h3>Sessions</h3>
+    <button type="button" style="margin-top:25px" class="btn btn-primary" ng-click="createNewSession(event.id)">Create New Session</button>
+
     <hr />
+
+    <h3>Sessions</h3>
     <ul class="thumbnails">
         <li ng-repeat="session in event.sessions" class="span11">
             <div class="well" ng-click="navigateToDetails(event)">
