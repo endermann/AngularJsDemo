@@ -15,7 +15,13 @@ function MainMenuController($scope, authenticationService) {
 MainMenuController.$inject = ['$scope', 'authenticationService'];
 
 function EventListController($scope, eventData, $location, eventResource) {
-    $scope.events = eventData.events;
+    $scope.events = [];
+    eventResource.queryAll(function(events) {
+        $scope.events = events;
+    });
+
+    var s = '[{"id":1,"name":"Code Camp","date":"03/15/2013","time":"9:00am - 5:00pm","location":{"address":"123 Wall St","city":"New York","province":"NY"},"imageUrl":"http://blog.laptopmag.com/wpress/wp-content/uploads/2012/08/Code-Camp_sf.jpg","sessions":[{"id":1,"name":"How To Program","track":1,"duration":2,"abstract":"this session will teach you to program"},{"id":2,"name":"How To Dance","track":2,"duration":3,"abstract":"this session will teach you to dance"},{"id":3,"name":"How To Sing","track":1,"duration":1,"abstract":"this session will teach you to sing"}]},{"id":1,"name":"Code Camp","date":"03/15/2013","time":"9:00am - 5:00pm","location":{"address":"123 Wall St","city":"New York","province":"NY"},"imageUrl":"http://blog.laptopmag.com/wpress/wp-content/uploads/2012/08/Code-Camp_sf.jpg","sessions":[{"id":1,"name":"How To Program","track":1,"duration":2,"abstract":"this session will teach you to program"},{"id":2,"name":"How To Dance","track":2,"duration":3,"abstract":"this session will teach you to dance"},{"id":3,"name":"How To Sing","track":1,"duration":1,"abstract":"this session will teach you to sing"}]}]';
+
     $scope.stuff = function() {
         var q = eventResource.queryAll(function() {
             console.log(q);

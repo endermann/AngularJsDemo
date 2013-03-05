@@ -46,9 +46,9 @@ angular.module('eventsApp.services', [])
         };
     }])
     .factory('eventResource', ['$resource', function ($resource) {
-        var service =  $resource('/event/event:id.json', {id: '@id'});
+        var service =  $resource('/event/:id', {id: '@id'});
 
-        service.queryAll = function() { service.query({all:true}) };
+        service.queryAll = function(cb) { service.query({all:true}, cb) };
 
         return service;
     }])
