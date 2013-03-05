@@ -14,14 +14,28 @@ function MainMenuController($scope, authenticationService) {
 }
 MainMenuController.$inject = ['$scope', 'authenticationService'];
 
-function EventListController($scope, eventData, $location) {
+function EventListController($scope, eventData, $location, eventResource) {
     $scope.events = eventData.events;
+    $scope.stuff = function() {
+        var q = eventResource.queryAll(function() {
+            console.log(q);
+        });
+        var q2 = eventResource.get({id:1});
+        console.log(q2);
+        console.log(q2.location);
+    }
+//        var events = eventResource.get({id: 1}, function () {
+//         if (!!user && user.password === $scope.user.password) {
+//         authenticationService.setCurrentUser(user);
+//         $location.url('/events');
+//         }
+//         });
 
     $scope.navigateToDetails = function(event) {
         $location.url('/event/' + event.id);
     }
 }
-EventListController.$inject = ['$scope', 'eventData', '$location'];
+EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
 
 function EventController($scope, $routeParams, eventData, $location, durations) {
@@ -38,20 +52,27 @@ function EventController($scope, $routeParams, eventData, $location, durations) 
 EventController.$inject = ['$scope', '$routeParams', 'eventData', '$location', 'durations'];
 
 
-function NewEventController($scope, eventData, $location) {
+function NewEventController($scope, eventData, $location, eventResource) {
     $scope.event = {};
 
     $scope.saveEvent = function(event, form) {
         if(form.$valid) {
+            event.id = eventData.getNextId();
             eventData.events.push(event);
         }
+        eventResource.save(eventData);
+        console.dir(eventResource);
+
+        console.dir(eventResource.get(1));
+        console.log(eventResource.queryAll());
+
     }
 
     $scope.cancelEvent = function() {
         $location.url("/events");
     }
 }
-NewEventController.$inject = ['$scope', 'eventData', '$location'];
+NewEventController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
 
 function NewSessionController($scope, eventData, $routeParams) {

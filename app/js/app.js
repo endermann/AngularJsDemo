@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('eventsApp', ['eventsApp.filters', 'eventsApp.services', 'eventsApp.directives', 'ngResource', 'eventsApp.services2']).
+angular.module('eventsApp', ['eventsApp.filters', 'eventsApp.services', 'eventsApp.directives', 'ngResource']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/events', {templateUrl: '/partials/eventList.html', controller: EventListController});
     $routeProvider.when('/events/:eventId/sessions/new', {templateUrl: '/partials/newSession.html', controller: NewSessionController});

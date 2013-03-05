@@ -289,7 +289,7 @@ StaticServlet.prototype.writeFile_ = function (req, res, path) {
         });
 
         writeStream.on('error', function (err) {
-            console.logEntry(err);
+            console.log(err);
             self.sendError_(req, res, err);
         });
     }

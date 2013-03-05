@@ -1,9 +1,19 @@
 'use strict';
 
 angular.module('eventsApp.services', [])
-    .factory('eventData', function() {
+    .factory('eventData', ['eventResource', function(eventResource) {
         return {
-            events: [
+            events: (function() {
+                var results = [];
+                var r1 = eventResource.get({id:1}, function() {
+                    results.push(r1);
+                });
+                var r2 = eventResource.get({id:2}, function() {
+                    results.push(r2);
+                });
+                return results;
+            })(),
+/*            events: [
                 {id: 1, name: 'Code Camp',  date: '03/15/2013', time: '9:00am - 5:00pm',
                     location: {address: "123 Wall St", city: "New York", province: "NY"},
                     imageUrl: 'http://blog.laptopmag.com/wpress/wp-content/uploads/2012/08/Code-Camp_sf.jpg',
@@ -23,9 +33,25 @@ angular.module('eventsApp.services', [])
                     location: {address: "10 Downing St", city: "London", province: "UK"},
                     imageUrl: 'http://2.bp.blogspot.com/_gLnOWFiJhI8/SzfU7icq4SI/AAAAAAAAAAw/uPYwoNfPQHU/S1600-R/cart.jpg'
                 }
-                ]
+                ],*/
+            getNextId: function() {
+                var max = 1;
+                for(var event in this.events) {
+                    if(event.id > max) {
+                        max = event.id;
+                    }
+                }
+                return max;
+            }
         };
-    })
+    }])
+    .factory('eventResource', ['$resource', function ($resource) {
+        var service =  $resource('/event/event:id.json', {id: '@id'});
+
+        service.queryAll = function() { service.query({all:true}) };
+
+        return service;
+    }])
     .factory('userResource', ['$resource', function ($resource) {
         var service =  $resource('user/:userName.json', {userName: '@userName'}, { });
 
@@ -45,9 +71,7 @@ angular.module('eventsApp.services', [])
             getCurrentUser: function() { return cloneObject(currentUser);  },
             setCurrentUser: function(user) { currentUser = cloneObject(user); }
         };
-    });
-
-angular.module('eventsApp.services2', [])
+    })
     .factory('durations', function() {
         return {
             getDuration: function() {
