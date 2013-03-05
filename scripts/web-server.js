@@ -262,8 +262,9 @@ StaticServlet.prototype.sendFiles_ = function (req, res, path) {
     }
     var results = "[";
     for (var idx = 0; idx < files.length; idx++) {
-        results += fs.readFileSync(path + "\\" + files[0]);
+        results += fs.readFileSync(path + "\\" + files[0]) + ",";
     }
+    results = results.substr(0, results.length-1);
     results += "]";
     self.writeSuccessHeader(res, path);
     res.write(results);
