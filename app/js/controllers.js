@@ -111,6 +111,9 @@ EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authent
 function LoginController($scope, $location, userResource, authenticationService) {
     $scope.user = {userName: "", password: ""};
     $scope.login = function () {
+        var users = userResource.queryAll({}, function () {
+             console.log(users.length);
+        })  ;
         var user = userResource.get({userName: $scope.user.userName}, function () {
             if (!!user && user.password === $scope.user.password) {
                 authenticationService.setCurrentUser(user);

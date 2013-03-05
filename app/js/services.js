@@ -53,9 +53,9 @@ angular.module('eventsApp.services', [])
         return service;
     }])
     .factory('userResource', ['$resource', function ($resource) {
-        var service =  $resource('user/:userName.json', {userName: '@userName'}, { });
+        var service =  $resource('user/:userName', {userName: '@userName'}, { });
 
-        service.queryAll = function() { service.query({all:true}) };
+        service.queryAll = function(callback) { service.query({all:true}, callback) };
 
         return service;
     }])
