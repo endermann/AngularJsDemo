@@ -10,6 +10,6 @@ angular.module('eventsApp', ['eventsApp.filters', 'eventsApp.services', 'eventsA
     $routeProvider.when('/register', {templateUrl: '/partials/editProfile.html', controller: EditProfileController});
     $routeProvider.when('/editProfile', {templateUrl: '/partials/editProfile.html', controller: EditProfileController});
     $routeProvider.when('/login', {templateUrl: '/partials/login.html', controller: LoginController});
-    $routeProvider.otherwise({redirectTo: '/view1'});
+    $routeProvider.otherwise({redirectTo: '/events'});
     $locationProvider.html5Mode(true);
   }]);
