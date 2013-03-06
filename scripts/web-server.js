@@ -15,9 +15,9 @@ var DEFAULT_PORT = 8000;
 
 function main(argv) {
     new HttpServer({
-        'GET': createServlet(StaticServlet),
-        'POST': createServlet(StaticServlet),
-        'HEAD': createServlet(StaticServlet)
+        'GET':createServlet(StaticServlet),
+        'POST':createServlet(StaticServlet),
+        'HEAD':createServlet(StaticServlet)
     }).start(Number(argv[2]) || DEFAULT_PORT);
 }
 
@@ -85,17 +85,17 @@ function StaticServlet() {
 }
 
 StaticServlet.MimeMap = {
-    'txt': 'text/plain',
-    'html': 'text/html',
-    'css': 'text/css',
-    'xml': 'application/xml',
-    'json': 'application/json',
-    'js': 'application/javascript',
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'gif': 'image/gif',
-    'png': 'image/png',
-    'svg': 'image/svg+xml'
+    'txt':'text/plain',
+    'html':'text/html',
+    'css':'text/css',
+    'xml':'application/xml',
+    'json':'application/json',
+    'js':'application/javascript',
+    'jpg':'image/jpeg',
+    'jpeg':'image/jpeg',
+    'gif':'image/gif',
+    'png':'image/png',
+    'svg':'image/svg+xml'
 };
 
 StaticServlet.prototype.handleRequest = function (req, res) {
@@ -115,19 +115,25 @@ StaticServlet.prototype.handleRequest = function (req, res) {
         return self.writeFile_(req, res, path);
     }
 
+    self.findAndSendTarget(req, path, res, self);
+}
+
+StaticServlet.prototype.findAndSendTarget = function(req, path, res, self) {
     fs.stat(path, function (err, stat) {
         if (err && path.indexOf('app/') >= 0)
             return self.sendMissing_(req, res, path);
         else if (err) {
-            return self.sendDefault_(req, res);
-        }
-        if (stat.isDirectory())    {
-            if (req.url.query.all) {
-                return self.sendFiles_(req, res, path);
+            if (path.indexOf('.json') == -1) {
+                return self.findAndSendTarget(req, path + ".json", res, self);
             }
             return self.sendDefault_(req, res);
         }
-//      return self.sendDirectory_(req, res, path);
+        if (stat.isDirectory()) {
+            if (path.indexOf('/data/') == -1) {
+                return self.sendDefault_(req, res);
+            }
+            return self.sendAllJsonFilesAppended_(req, res, path);
+        }
         return self.sendFile_(req, res, path);
     });
 }
@@ -147,7 +153,7 @@ StaticServlet.prototype.attemptingToAccessOutsideLocalAppPath = function (pathPa
 
 StaticServlet.prototype.sendError_ = function (req, res, error) {
     res.writeHead(500, {
-        'Content-Type': 'text/html'
+        'Content-Type':'text/html'
     });
     res.write('<!doctype html>\n');
     res.write('<title>Internal Server Error</title>\n');
@@ -160,7 +166,7 @@ StaticServlet.prototype.sendError_ = function (req, res, error) {
 StaticServlet.prototype.sendMissing_ = function (req, res, path) {
     path = path.substring(1);
     res.writeHead(404, {
-        'Content-Type': 'text/html'
+        'Content-Type':'text/html'
     });
     res.write('<!doctype html>\n');
     res.write('<title>404 Not Found</title>\n');
@@ -177,7 +183,7 @@ StaticServlet.prototype.sendMissing_ = function (req, res, path) {
 StaticServlet.prototype.sendForbidden_ = function (req, res, path) {
     path = path.substring(1);
     res.writeHead(403, {
-        'Content-Type': 'text/html'
+        'Content-Type':'text/html'
     });
     res.write('<!doctype html>\n');
     res.write('<title>403 Forbidden</title>\n');
@@ -192,8 +198,8 @@ StaticServlet.prototype.sendForbidden_ = function (req, res, path) {
 
 StaticServlet.prototype.sendRedirect_ = function (req, res, redirectUrl) {
     res.writeHead(301, {
-        'Content-Type': 'text/html',
-        'Location': redirectUrl
+        'Content-Type':'text/html',
+        'Location':redirectUrl
     });
     res.write('<!doctype html>\n');
     res.write('<title>301 Moved Permanently</title>\n');
@@ -213,7 +219,7 @@ StaticServlet.prototype.sendDefault_ = function (req, res) {
 
     var file = fs.createReadStream(path);
     res.writeHead(200, {
-        'Content-Type': StaticServlet.
+        'Content-Type':StaticServlet.
             MimeMap[path.split('.').pop()] || 'text/plain'
     });
     if (req.method === 'HEAD') {
@@ -233,7 +239,7 @@ StaticServlet.prototype.sendFile_ = function (req, res, path) {
     var self = this;
     var file = fs.createReadStream(path);
     res.writeHead(200, {
-        'Content-Type': StaticServlet.
+        'Content-Type':StaticServlet.
             MimeMap[path.split('.').pop()] || 'text/plain'
     });
     if (req.method === 'HEAD') {
@@ -249,7 +255,7 @@ StaticServlet.prototype.sendFile_ = function (req, res, path) {
     }
 };
 
-StaticServlet.prototype.sendFiles_ = function (req, res, path) {
+StaticServlet.prototype.sendAllJsonFilesAppended_ = function (req, res, path) {
     var self = this;
     var files = []
     try {
@@ -262,9 +268,11 @@ StaticServlet.prototype.sendFiles_ = function (req, res, path) {
     }
     var results = "[";
     for (var idx = 0; idx < files.length; idx++) {
-        results += fs.readFileSync(path + "\\" + files[0]) + ",";
+        if (files[idx].indexOf(".json") == files[idx].length - 5) {
+            results += fs.readFileSync(path + "\\" + files[idx]) + ",";
+        }
     }
-    results = results.substr(0, results.length-1);
+    results = results.substr(0, results.length - 1);
     results += "]";
     self.writeSuccessHeader(res, path);
     res.write(results);
@@ -276,16 +284,16 @@ StaticServlet.prototype.writeFile_ = function (req, res, path) {
     var self = this;
 
     res.writeHead(200, {
-        'Content-Type': 'text/plain'
+        'Content-Type':'text/plain'
     });
     if (req.method === 'HEAD') {
         res.end();
     } else {
-        var writeStream = fs.createWriteStream(path);
+        var writeStream = fs.createWriteStream(path + ".json");
         req.pipe(writeStream);
 
         req.on('end', function () {
-            res.writeHead(200, {"content-type": "text/html"});
+            res.writeHead(200, {"content-type":"text/html"});
             res.end('<html><body>Save Successful</body></html>');
         });
 
@@ -296,9 +304,9 @@ StaticServlet.prototype.writeFile_ = function (req, res, path) {
     }
 };
 
-StaticServlet.prototype.writeSuccessHeader = function(res, path) {
+StaticServlet.prototype.writeSuccessHeader = function (res, path) {
     res.writeHead(200, {
-        'Content-Type': StaticServlet.
+        'Content-Type':StaticServlet.
             MimeMap[path.split('.').pop()] || 'text/plain'
     });
 }
@@ -334,7 +342,7 @@ StaticServlet.prototype.sendDirectory_ = function (req, res, path) {
 StaticServlet.prototype.writeDirectoryIndex_ = function (req, res, path, files) {
     path = path.substring(1);
     res.writeHead(200, {
-        'Content-Type': 'text/html'
+        'Content-Type':'text/html'
     });
     if (req.method === 'HEAD') {
         res.end();

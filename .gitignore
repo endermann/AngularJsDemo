@@ -6,4 +6,3 @@ build.xml
 .project
 .settings
 .idea/*
-app/user/*.json

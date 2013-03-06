@@ -118,16 +118,10 @@ EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authent
 
 function LoginController($scope, $location, userResource, authenticationService) {
     $scope.user = {userName: "", password: ""};
-    $scope.users = [];
-    $scope.setUsers = function () {
-        var theUsers = userResource.queryAll(function (users) {
-            $scope.users = users;
-        });
-    };
     $scope.login = function () {
-       ;
-        var user = userResource.get({userName: $scope.user.userName}, function () {
+        userResource.get({userName: $scope.user.userName}, function (user) {
             if (!!user && user.password === $scope.user.password) {
+                console.log(user);
                 authenticationService.setCurrentUser(user);
                 $location.url('/events');
             }

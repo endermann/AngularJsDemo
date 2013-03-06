@@ -46,16 +46,16 @@ angular.module('eventsApp.services', [])
         };
     }])
     .factory('eventResource', ['$resource', function ($resource) {
-        var service =  $resource('/event/:id', {id: '@id'});
+        var service =  $resource('/data/event/:id', {id: '@id'});
 
-        service.queryAll = function(cb) { service.query({all:true}, cb) };
+        service.queryAll = function(cb) { service.query({}, cb) };
 
         return service;
     }])
     .factory('userResource', ['$resource', function ($resource) {
-        var service =  $resource('user/:userName', {userName: '@userName'}, { });
+        var service =  $resource('/data/user/:userName', {userName: '@userName'}, { });
 
-        service.queryAll = function(callback) { service.query({all:true}, callback) };
+        service.queryAll = function(callback) { service.query({}, callback) };
 
         return service;
     }])
