@@ -1,7 +1,7 @@
 <div id="me">
     <img data-ng-src="{{event.imageUrl}}" alt="{{event.name}}" />
     <div class="row">
-        <div class="span11"><h2>{{event.name}}</h2></div>
+        <div class="span11"><h2>{{event.name}} <button type="button" class="btn" ng-show="allowUserToEditEvent()" ng-click="editEvent()">Edit</button> </h2></div>
     </div>
     <div class="row">
         <div class="span3">

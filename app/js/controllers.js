@@ -2,7 +2,11 @@
 
 function MainMenuController($scope, authenticationService) {
     $scope.user = {};
-    $scope.$watch(function() { return authenticationService.getCurrentUserName(); }, function() {  $scope.user = authenticationService.getCurrentUser(); });
+    $scope.$watch(function () {
+        return authenticationService.getCurrentUserName();
+    }, function () {
+        $scope.user = authenticationService.getCurrentUser();
+    });
 
     $scope.isAuthenticated = function () {
         return authenticationService.isAuthenticated();
@@ -17,53 +21,80 @@ MainMenuController.$inject = ['$scope', 'authenticationService'];
 function EventListController($scope, eventData, $location, eventResource) {
     $scope.events = eventData.events;
 
-    $scope.navigateToDetails = function(event) {
+    $scope.navigateToDetails = function (event) {
         $location.url('/event/' + event.id);
     }
 }
 EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
 
-function EventController($scope, $routeParams, eventData, $location, durations) {
-    $scope.event = _.findWhere(eventData.events, {id: parseInt($routeParams.eventId)});
-    $scope.getDuration = function(duration) {
+function EventController($scope, $routeParams, eventData, $location, durations, authenticationService) {
+    $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
+    $scope.getDuration = function (duration) {
         return durations.getDuration(duration);
     }
     //$scope.eventTrack = getDuration(event.duration);
 
-    $scope.createNewSession = function(eventId) {
+    $scope.editEvent = function () {
+        $location.url('/events/edit/' + $scope.event.id);
+    }
+
+    $scope.createNewSession = function (eventId) {
         $location.url("/events/" + eventId + "/sessions/new")
     }
+
+    $scope.allowUserToEditEvent = function() {
+        return authenticationService.getCurrentUserName() === $scope.event.creator
+    }
 }
-EventController.$inject = ['$scope', '$routeParams', 'eventData', '$location', 'durations'];
+EventController.$inject = ['$scope', '$routeParams', 'eventData', '$location', 'durations', 'authenticationService'];
 
 
-function NewEventController($scope, eventData, $location, eventResource) {
-    $scope.event = {};
-
-    $scope.saveEvent = function(event, form) {
-        if(form.$valid) {
-            event.id = eventData.getNextId();
-            console.log(event);
-            eventData.events.push(event);
-        }
-        eventResource.save(event);
-        console.dir(eventResource);
-
-        console.dir(eventResource.get(1));
-        console.log(eventResource.queryAll());
-
+function EditEventController($scope, eventData, $location, $routeParams, eventResource, authenticationService) {
+    var event = {};
+    if (!authenticationService.isAuthenticated()) {
+        $location.url('/login');
+        return;
     }
 
-    $scope.cancelEvent = function() {
+    $scope.editingEvent = $location.$$url.indexOf('/events/edit') > -1;
+
+    if ($scope.editingEvent) {
+        event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
+        if (authenticationService.getCurrentUserName() != event.creator) {
+            $location.url('/login');
+            return;
+        }
+    }
+
+    $scope.event = event;
+
+    $scope.saveEvent = function (event, form) {
+        if (form.$valid) {
+            event.creator = authenticationService.getCurrentUserName();
+            console.log('x');
+            if (!$scope.editingEvent) {
+                event.id = eventData.getNextId();
+                console.log(event.id);
+                eventData.events.push(event);
+            }
+            console.log("y");
+        }
+        else {
+            console.log('invalide');
+        }
+        eventResource.save(event);
+    }
+
+    $scope.cancelEvent = function () {
         $location.url("/events");
     }
 }
-NewEventController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
+EditEventController.$inject = ['$scope', 'eventData', '$location', '$routeParams', 'eventResource', 'authenticationService'];
 
 
 function NewSessionController($scope, eventData, $routeParams) {
-    $scope.event = _.findWhere(eventData.events, {id: parseInt($routeParams.eventId)});
+    $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
 
     $scope.session = {}
 
@@ -75,14 +106,18 @@ NewSessionController.$inject = ['$scope', 'eventData', '$routeParams'];
 
 function EditProfileController($scope, $location, userResource, authenticationService) {
     $scope.user = {};
-    $scope.$watch(function() { return authenticationService.getCurrentUserName(); }, function() {  $scope.user = authenticationService.getCurrentUser(); });
+    $scope.$watch(function () {
+        return authenticationService.getCurrentUserName();
+    }, function () {
+        $scope.user = authenticationService.getCurrentUser();
+    });
 
     $scope.isAuthenticated = function () {
         return authenticationService.isAuthenticated();
     };
 
     $scope.registerUser = function () {
-        userResource.save( $scope.user);
+        userResource.save($scope.user);
         authenticationService.setCurrentUser($scope.user);
         $location.url('/events');
     };
@@ -95,16 +130,16 @@ function EditProfileController($scope, $location, userResource, authenticationSe
 EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authenticationService'];
 
 function ViewProfileController($scope, $routeParams, userResource, authenticationService) {
-    userResource.get({userName: $routeParams.userName}, function (user) {
+    userResource.get({userName:$routeParams.userName}, function (user) {
         $scope.user = user;
     });
 }
 ViewProfileController.$inject = ['$scope', '$routeParams', 'userResource', 'authenticationService'];
 
 function LoginController($scope, $location, userResource, authenticationService) {
-    $scope.user = {userName: "", password: ""};
+    $scope.user = {userName:"", password:""};
     $scope.login = function () {
-        userResource.get({userName: $scope.user.userName}, function (user) {
+        userResource.get({userName:$scope.user.userName}, function (user) {
             if (!!user && user.password === $scope.user.password) {
                 authenticationService.setCurrentUser(user);
                 $location.url('/events');

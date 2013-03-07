@@ -10,7 +10,9 @@ angular.module('eventsApp.services', [])
         })(),
         getNextId:function () {
             var max = 1;
+            console.log(this.events);
             for (var event in this.events) {
+                console.dir(event);
                 if (event.id > max) {
                     max = event.id;
                 }
