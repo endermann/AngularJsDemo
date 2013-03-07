@@ -121,7 +121,6 @@ function LoginController($scope, $location, userResource, authenticationService)
     $scope.login = function () {
         userResource.get({userName: $scope.user.userName}, function (user) {
             if (!!user && user.password === $scope.user.password) {
-                console.log(user);
                 authenticationService.setCurrentUser(user);
                 $location.url('/events');
             }
