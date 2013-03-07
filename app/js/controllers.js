@@ -5,9 +5,9 @@ function MainMenuController($scope, authenticationService) {
     $scope.$watch(function() { return authenticationService.getCurrentUserName(); }, function() {  $scope.user = authenticationService.getCurrentUser(); });
 
     $scope.isAuthenticated = function () {
-        var currentUser = authenticationService.getCurrentUser();
-        return !!currentUser && !!currentUser.userName;
+        return authenticationService.isAuthenticated();
     };
+
     $scope.logout = function () {
         authenticationService.setCurrentUser({});
     };
@@ -99,8 +99,7 @@ function EditProfileController($scope, $location, userResource, authenticationSe
     $scope.$watch(function() { return authenticationService.getCurrentUserName(); }, function() {  $scope.user = authenticationService.getCurrentUser(); });
 
     $scope.isAuthenticated = function () {
-        var currentUser = authenticationService.getCurrentUser();
-        return !!currentUser && !!currentUser.userName;
+        return authenticationService.isAuthenticated();
     };
 
     $scope.registerUser = function () {
@@ -115,6 +114,13 @@ function EditProfileController($scope, $location, userResource, authenticationSe
     };
 }
 EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authenticationService'];
+
+function ViewProfileController($scope, $routeParams, userResource, authenticationService) {
+    userResource.get({userName: $routeParams.userName}, function (user) {
+        $scope.user = user;
+    });
+}
+ViewProfileController.$inject = ['$scope', '$routeParams', 'userResource', 'authenticationService'];
 
 function LoginController($scope, $location, userResource, authenticationService) {
     $scope.user = {userName: "", password: ""};

@@ -79,6 +79,9 @@ angular.module('eventsApp.services', [])
             },
             setCurrentUser:function (user) {
                 currentUser = cloneObject(user);
+            },
+            isAuthenticated:function() {
+                return !!currentUser && !!currentUser.userName;
             }
         };
     })

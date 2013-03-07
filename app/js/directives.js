@@ -1,8 +1,5 @@
 'use strict';
 
-/* Directives */
-
-
 angular.module('eventsApp.directives', [])
     .directive('appVersion', ['version', function (version) {
         return function (scope, elm, attrs) {
@@ -13,8 +10,7 @@ angular.module('eventsApp.directives', [])
         return {
             restrict:"A",
             link:function (scope, element, attrs) {
-                attrs.$observe('gravatar', function(newValue, oldValue) {
-                    console.log(newValue);
+                attrs.$observe('gravatar', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         element.attr('src', gravatarUrlBuilder.buildUrlForEmail(newValue));
                     }
@@ -22,4 +18,3 @@ angular.module('eventsApp.directives', [])
             }
         }
     }]);
-;
