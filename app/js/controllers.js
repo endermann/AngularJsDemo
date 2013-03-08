@@ -72,18 +72,13 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     $scope.saveEvent = function (event, form) {
         if (form.$valid) {
             event.creator = authenticationService.getCurrentUserName();
-            console.log('x');
             if (!$scope.editingEvent) {
                 event.id = eventData.getNextId();
-                console.log(event.id);
                 eventData.events.push(event);
             }
-            console.log("y");
+            eventResource.save(event);
+            $location.url('/event/' + event.id)
         }
-        else {
-            console.log('invalide');
-        }
-        eventResource.save(event);
     }
 
     $scope.cancelEvent = function () {
@@ -116,15 +111,22 @@ function EditProfileController($scope, $location, userResource, authenticationSe
         return authenticationService.isAuthenticated();
     };
 
-    $scope.registerUser = function () {
-        userResource.save($scope.user);
-        authenticationService.setCurrentUser($scope.user);
-        $location.url('/events');
+    $scope.registerUser = function (user, form) {
+        if (!form.$valid) {
+            return;
+        }
+        userResource.save(user);
+        authenticationService.setCurrentUser(user);
+        $location.url('/viewProfile/' + user.userName);
     };
 
-    $scope.updateProfile = function () {
-        userResource.save($scope.user);
-        authenticationService.setCurrentUser($scope.user);
+    $scope.updateProfile = function (user, form) {
+        if (!form.$valid) {
+            return;
+        }
+        userResource.save(user);
+        authenticationService.setCurrentUser(user);
+        $location.url('/viewProfile/' + user.userName);
     };
 }
 EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authenticationService'];

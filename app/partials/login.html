@@ -1,9 +1,9 @@
-<div class="container-fluid">
+<div class="container-fluid"  enter-target="loginButton">
     <div class="row-fluid">
         <div class="span3">
             <fieldset>
                 <label for="userName">User Name:</label>
-                <input id="userName" type="text" placeholder="Username" ng-model="user.userName">
+                <input focus id="userName" type="text" placeholder="Username" ng-model="user.userName">
                 <label for="password">Password:</label>
                 <input id="password" type="password" placeholder="Password" ng-model="user.password">
             </fieldset>
@@ -12,8 +12,7 @@
     <div class="row-fluid">
         <div class="span3">
             <div class="pull-left"><span class="btn">Cancel</span></div>
-            <div class="pull-right"><span class="btn" ng-click="login()">Login</span></div>
+            <div class="pull-right"><span id="loginButton" class="btn" ng-click="login()">Login</span></div>
         </div>
     </div>
-
 </div>
