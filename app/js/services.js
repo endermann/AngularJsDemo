@@ -9,15 +9,13 @@ angular.module('eventsApp.services', [])
             });
         })(),
         getNextId:function () {
-            var max = 1;
-            console.log(this.events);
-            for (var event in this.events) {
-                console.dir(event);
-                if (event.id > max) {
-                    max = event.id;
+            var max = 0;
+            for (var idx = 0; idx < this.events.length; idx++) {
+                if (this.events[idx].id > max) {
+                    max = this.events[idx].id;
                 }
             }
-            return max;
+            return max+1;
         }
     };
 }])
