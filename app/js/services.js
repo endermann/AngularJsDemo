@@ -28,6 +28,17 @@ angular.module('eventsApp.services', [])
 
     return service;
 }])
+    .factory('userData', ['userResource', function (userResource) {
+    return {
+        users:(function () {
+            return userResource.query({}, function(users) {
+                console.log('users');
+                console.log(users);
+                return users;
+            });
+        })()
+    };
+}])
     .factory('userResource', ['$resource', function ($resource) {
     var service = $resource('/data/user/:userName', {userName:'@userName'}, { });
 

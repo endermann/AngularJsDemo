@@ -1,7 +1,12 @@
 <div id="me">
-    <img data-ng-src="{{event.imageUrl}}" alt="{{event.name}}" />
+    <img data-ng-src="{{event.imageUrl}}" alt="{{event.name}}"/>
+
     <div class="row">
-        <div class="span11"><h2>{{event.name}} <button type="button" class="btn" ng-show="allowUserToEditEvent()" ng-click="editEvent()">Edit</button> </h2></div>
+        <div class="span11">
+            <h2>{{event.name}}
+                <button type="button" class="btn" ng-show="allowUserToEditEvent()" ng-click="editEvent()">Edit</button>
+            </h2>
+        </div>
     </div>
     <div class="row">
         <div class="span3">
@@ -10,26 +15,41 @@
         </div>
         <div class="span4">
             <address>
-                <strong>Address:</strong><br />
-                {{event.location.address}}<br />
+                <strong>Address:</strong><br/>
+                {{event.location.address}}<br/>
                 {{event.location.city}}, {{event.location.province}}
             </address>
         </div>
 
     </div>
-    <button type="button" style="margin-top:25px" class="btn btn-primary" ng-click="createNewSession(event.id)">Create New Session</button>
+    <button type="button" style="margin-top:25px" class="btn btn-primary" ng-click="createNewSession(event.id)">Create
+        New Session
+    </button>
 
-    <hr />
+    <hr/>
 
     <h3>Sessions</h3>
     <ul class="thumbnails">
         <li ng-repeat="session in event.sessions" class="span11">
-            <div class="well" ng-click="navigateToDetails(event)">
-                <h4>{{session.name}}</h4>
-                <div class="row">
-                    <span class="span3">Duration: {{getDuration(session.duration)}}</span>
+            <div class="row" style="height:100px;">
+                <div class="span0 well" style="height:100%;">
+                    <div style="padding-left:8px; margin-top:20px;">
+                        <i class="icon-chevron-up icon-white"></i>
+                    </div>
+                    <div class="badge badge-inverse">
+                        <div>25</div>
+                    </div>
+                    <div style="padding-left:8px;">
+                        <i class="icon-chevron-down"></i>
+                    </div>
                 </div>
-                <p>{{session.abstract}}</p>
+                <div class="well span9" ng-click="navigateToDetails(event)" style=" height:100%; overflow: auto;">
+                    <h4>{{session.name}}</h4>
+                    <h6><a href="/viewProfile/{{session.creator}}">{{getSessionCreatorName(session.creator)}}</a></h6>
+                    <span>Duration: {{getDuration(session.duration)}}</span>
+
+                    <p>{{session.abstract}}</p>
+                </div>
             </div>
         </li>
     </ul>

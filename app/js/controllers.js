@@ -23,31 +23,41 @@ function EventListController($scope, eventData, $location, eventResource) {
 
     $scope.navigateToDetails = function (event) {
         $location.url('/event/' + event.id);
-    }
+    };
 }
 EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
 
-function EventController($scope, $routeParams, eventData, $location, durations, authenticationService) {
+function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService) {
     $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
+    console.log($scope.event);
     $scope.getDuration = function (duration) {
         return durations.getDuration(duration);
-    }
+    };
     //$scope.eventTrack = getDuration(event.duration);
 
     $scope.editEvent = function () {
         $location.url('/events/edit/' + $scope.event.id);
-    }
+    };
 
     $scope.createNewSession = function (eventId) {
         $location.url("/events/" + eventId + "/sessions/new")
-    }
+    };
 
-    $scope.allowUserToEditEvent = function() {
+    $scope.allowUserToEditEvent = function () {
         return authenticationService.getCurrentUserName() === $scope.event.creator
-    }
+    };
+
+    $scope.getSessionCreatorName = function (userName) {
+        if (!userName) {
+            return "";
+        }
+        console.log(userName);
+        console.log(userData.users);
+        return _.findWhere(userData.users, {userName:userName}).name;
+    };
 }
-EventController.$inject = ['$scope', '$routeParams', 'eventData', '$location', 'durations', 'authenticationService'];
+EventController.$inject = ['$scope', '$routeParams', 'eventData', 'userData', '$location', 'durations', 'authenticationService'];
 
 
 function EditEventController($scope, eventData, $location, $routeParams, eventResource, authenticationService) {
@@ -79,25 +89,33 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
             eventResource.save(event);
             $location.url('/event/' + event.id)
         }
-    }
+    };
 
     $scope.cancelEvent = function () {
         $location.url("/events");
-    }
+    };
 }
 EditEventController.$inject = ['$scope', 'eventData', '$location', '$routeParams', 'eventResource', 'authenticationService'];
 
 
-function NewSessionController($scope, eventData, $routeParams) {
+function NewSessionController($scope, eventData, $routeParams, eventResource, $location, authenticationService) {
+    if (!authenticationService.isAuthenticated()) {
+        $location.url('/login');
+        return;
+    }
+
     $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
 
     $scope.session = {}
 
     $scope.saveSession = function (session) {
+        session.creator = authenticationService.getCurrentUserName();
         $scope.event.sessions.push(session);
+        eventResource.save($scope.event);
+        $location.url('/event/' + $routeParams.eventId);
     }
 }
-NewSessionController.$inject = ['$scope', 'eventData', '$routeParams'];
+NewSessionController.$inject = ['$scope', 'eventData', '$routeParams', 'eventResource', '$location', 'authenticationService'];
 
 function EditProfileController($scope, $location, userResource, authenticationService) {
     $scope.user = {};
