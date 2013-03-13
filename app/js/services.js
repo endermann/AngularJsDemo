@@ -16,6 +16,15 @@ angular.module('eventsApp.services', [])
                 }
             }
             return max+1;
+        },
+        getNextSessionId:function (event) {
+            var max = 0;
+            for (var idx = 0; idx < event.sessions.length; idx++) {
+                if (event.sessions[idx].id > max) {
+                    max = event.sessions[idx].id;
+                }
+            }
+            return max+1;
         }
     };
 }])
@@ -32,8 +41,6 @@ angular.module('eventsApp.services', [])
     return {
         users:(function () {
             return userResource.query({}, function(users) {
-                console.log('users');
-                console.log(users);
                 return users;
             });
         })()

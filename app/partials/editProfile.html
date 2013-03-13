@@ -7,7 +7,7 @@
             <div class="span3">
                 <fieldset>
                     <label for="userName">User Name:</label>
-                    <input focus id="userName" ng-pattern="/^[-A-Za-z0-9]{2,20}$/" type="text" placeholder="Username" ng-model="user.userName" />
+                    <input focus id="userName" required ng-pattern="/^[-A-Za-z0-9]{2,20}$/" type="text" placeholder="Username" ng-model="user.userName" />
                     <label for="password">Password:</label>
                     <input id="password" required type="password" placeholder="Password" ng-model="user.password" />
                 </fieldset>
@@ -30,7 +30,8 @@
         <div class="row-fluid">
             <div class="span6 offset3">
                 <div class="pull-left" ng-hide="isAuthenticated()"><span class="btn">Cancel</span></div>
-                <div class="pull-right" ng-hide="isAuthenticated()"><span id="registerButton" class="btn" ng-click="registerUser(user, profileForm)">Register</span></div>
+
+                <div class="pull-right" ng-hide="isAuthenticated()"><button type="submit" class="btn btn-primary" ng-click="registerUser(user, profileForm)">Save</button></div>
                 <div class="pull-right" ng-show="isAuthenticated()"><span id="updateButton" class="btn" ng-click="updateProfile(user, profileForm)">Update</span></div>
             </div>
         </div>

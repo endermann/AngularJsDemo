@@ -4,7 +4,8 @@
 angular.module('eventsApp', ['eventsApp.filters', 'eventsApp.services', 'eventsApp.directives', 'ngResource']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/events', {templateUrl: '/partials/eventList.html', controller: EventListController});
-    $routeProvider.when('/events/:eventId/sessions/new', {templateUrl: '/partials/newSession.html', controller: NewSessionController});
+    $routeProvider.when('/events/:eventId/sessions/edit/:sessionId', {templateUrl: '/partials/editSession.html', controller: EditSessionController});
+    $routeProvider.when('/events/:eventId/sessions/new', {templateUrl: '/partials/editSession.html', controller: EditSessionController});
     $routeProvider.when('/event/:eventId', {templateUrl: '/partials/event.html', controller: EventController});
     $routeProvider.when('/events/new', {templateUrl: '/partials/editEvent.html', controller: EditEventController});
     $routeProvider.when('/events/edit/:eventId', {templateUrl: '/partials/editEvent.html', controller: EditEventController});
