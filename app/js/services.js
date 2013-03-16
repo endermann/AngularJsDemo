@@ -3,7 +3,7 @@
 angular.module('eventsApp.services', [])
     .factory('eventData', ['eventResource', function (eventResource) {
     return {
-        events:function (cb) {
+        events:function () {
             return eventResource.queryAll(function(events) {
                 return events;
             });
@@ -39,11 +39,11 @@ angular.module('eventsApp.services', [])
 }])
     .factory('userData', ['userResource', function (userResource) {
     return {
-        users:(function () {
-            return userResource.query({}, function(users) {
+        users:function () {
+            return userResource.queryAll(function(users) {
                 return users;
             });
-        })()
+        }
     };
 }])
     .factory('userResource', ['$resource', function ($resource) {
@@ -80,7 +80,6 @@ angular.module('eventsApp.services', [])
     .factory('durations', function () {
         return {
             getDuration:function (duration) {
-                console.log(duration);
                 switch (duration) {
                     case 1:
                         return "30 mins";

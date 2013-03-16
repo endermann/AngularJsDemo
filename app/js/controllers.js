@@ -30,8 +30,6 @@ EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResourc
 
 function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService, eventResource) {
     $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
-    console.log($scope.event);
-//    _.findWhere(eventData.events(), {id:parseInt($routeParams.eventId)});
 
     $scope.getDuration = function (duration) {
         return durations.getDuration(duration);
@@ -42,8 +40,7 @@ function EventController($scope, $routeParams, eventData, userData, $location, d
     };
 
     $scope.editSession = function (session) {
-        console.log('/events/' + $scope.event.id + '/sessions/edit/' + session.id);
-        $location.url('/events/' + $scope.event.id + '/sessions/edit' + session.id);
+        $location.url('/events/' + $scope.event.id + '/sessions/edit/' + session.id);
     };
 
     $scope.createNewSession = function (eventId) {
@@ -128,11 +125,13 @@ function EditSessionController($scope, eventData, $routeParams, eventResource, $
     }
 
     $scope.editingSession = $location.$$url.indexOf('/sessions/edit') > -1;
-    $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
-    $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
+    $scope.event = eventResource.get({id:parseInt($routeParams.eventId)}, function(event) {
+        $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
+    });
 
     $scope.saveSession = function (session) {
         session.creator = authenticationService.getCurrentUserName();
+        session.creatorName = authenticationService.getCurrentUser().name;
         if (!$scope.editingSession) {
             session.id = eventData.getNextSessionId($scope.event);
             $scope.event.sessions.push(session);
