@@ -86,30 +86,35 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     }
 
     $scope.editingEvent = $location.$$url.indexOf('/events/edit') > -1;
+    console.log($scope.editingEvent);
 
     if ($scope.editingEvent) {
-        event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
-        if (authenticationService.getCurrentUserName() != event.creator) {
-            $location.url('/login');
-            return;
-        }
+        var event = eventResource.get({id:$routeParams.eventId}, function(event) {
+            if (authenticationService.getCurrentUserName() != event.creator) {
+                $location.url('/login');
+                return;
+            }
+        });
     }
 
     $scope.event = event;
 
     $scope.saveEvent = function (event, form) {
         if (form.$valid) {
-            event.creator = authenticationService.getCurrentUserName();
-            if (!$scope.editingEvent) {
-                event.id = eventData.getNextId();
-                eventData.events.push(event);
-            }
-            eventResource.save(event);
-            $location.url('/event/' + event.id)
+            eventResource.queryAll(function(events) {
+
+
+                event.creator = authenticationService.getCurrentUserName();
+                if (!$scope.editingEvent) {
+                    event.id = eventData.getNextEventId(events);
+                }
+                eventResource.save(event);
+                $location.url('/event/' + event.id)
+            });
         }
     };
 
-    $scope.cancelEvent = function () {
+    $scope.cancelEdit = function () {
         $location.url("/events");
     };
 }

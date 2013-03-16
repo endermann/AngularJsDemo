@@ -3,16 +3,11 @@
 angular.module('eventsApp.services', [])
     .factory('eventData', ['eventResource', function (eventResource) {
     return {
-        events:function () {
-            return eventResource.queryAll(function(events) {
-                return events;
-            });
-        },
-        getNextId:function () {
+        getNextEventId:function (events) {
             var max = 0;
-            for (var idx = 0; idx < this.events.length; idx++) {
-                if (this.events[idx].id > max) {
-                    max = this.events[idx].id;
+            for (var idx = 0; idx < events.length; idx++) {
+                if (events[idx].id > max) {
+                    max = events[idx].id;
                 }
             }
             return max+1;

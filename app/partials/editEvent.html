@@ -1,5 +1,6 @@
 <div class="container" >
-    <h1>New Event</h1>
+    <h1 ng-hide="editingEvent">New Event</h1>
+    <h1 ng-show="editingEvent">Edit Event</h1>
     <hr/>
     <form name="newEventForm">
         <fieldset>
@@ -25,7 +26,7 @@
         <br />
 
         <button type="submit" class="btn btn-primary" ng-click="saveEvent(event, newEventForm)">Save</button>
-        <button type="button" class="btn btn-default" ng-click="cancelEvent()">Cancel</button>
+        <button type="button" class="btn btn-default" ng-click="cancelEdit()">Cancel</button>
 
     </form>
 </div>
