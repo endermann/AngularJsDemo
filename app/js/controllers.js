@@ -100,23 +100,35 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     $scope.event = event;
 
     $scope.saveEvent = function (event, form) {
-        if (form.$valid) {
-            eventResource.queryAll(function(events) {
+        if (!form.$valid) return;
 
-
-                event.creator = authenticationService.getCurrentUserName();
-                if (!$scope.editingEvent) {
-                    event.id = eventData.getNextEventId(events);
-                }
-                eventResource.save(event);
-                $location.url('/event/' + event.id)
-            });
+        if (!$scope.editing) {
+            saveEvent(event);
+        } else {
+            saveNewEvent(event);
         }
     };
 
     $scope.cancelEdit = function () {
         $location.url("/events");
     };
+
+    function saveNewEvent(event) {
+        eventResource.queryAll(function(events) {
+            event.creator = authenticationService.getCurrentUserName();
+            if (!$scope.editingEvent) {
+                event.id = eventData.getNextEventId(events);
+            }
+            saveEvent(event);
+        });
+    }
+
+    function saveEvent(event) {
+        eventResource.save(event);
+        $location.url('/event/' + event.id)
+    }
+
+
 }
 EditEventController.$inject = ['$scope', 'eventData', '$location', '$routeParams', 'eventResource', 'authenticationService'];
 
