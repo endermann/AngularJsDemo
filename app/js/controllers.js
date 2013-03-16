@@ -116,9 +116,7 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     function saveNewEvent(event) {
         eventResource.queryAll(function(events) {
             event.creator = authenticationService.getCurrentUserName();
-            if (!$scope.editingEvent) {
-                event.id = eventData.getNextEventId(events);
-            }
+            event.id = eventData.getNextEventId(events);
             saveEvent(event);
         });
     }
