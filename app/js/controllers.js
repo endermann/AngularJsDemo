@@ -102,7 +102,7 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     $scope.saveEvent = function (event, form) {
         if (!form.$valid) return;
 
-        if (!$scope.editing) {
+        if ($scope.editingEvent) {
             saveEvent(event);
         } else {
             saveNewEvent(event);
