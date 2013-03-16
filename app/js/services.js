@@ -3,11 +3,11 @@
 angular.module('eventsApp.services', [])
     .factory('eventData', ['eventResource', function (eventResource) {
     return {
-        events:(function () {
-            return eventResource.query({}, function(events) {
+        events:function (cb) {
+            return eventResource.queryAll(function(events) {
                 return events;
             });
-        })(),
+        },
         getNextId:function () {
             var max = 0;
             for (var idx = 0; idx < this.events.length; idx++) {
@@ -32,7 +32,7 @@ angular.module('eventsApp.services', [])
     var service = $resource('/data/event/:id', {id:'@id'});
 
     service.queryAll = function (cb) {
-        service.query({}, cb)
+        return service.query({}, cb)
     };
 
     return service;
@@ -50,7 +50,7 @@ angular.module('eventsApp.services', [])
     var service = $resource('/data/user/:userName', {userName:'@userName'}, { });
 
     service.queryAll = function (callback) {
-        service.query({}, callback)
+        return service.query({}, callback)
     };
 
     return service;
@@ -79,8 +79,16 @@ angular.module('eventsApp.services', [])
     })
     .factory('durations', function () {
         return {
-            getDuration:function () {
-                return "way too long";
+            getDuration:function (duration) {
+                console.log(duration);
+                switch (duration) {
+                    case 1:
+                        return "30 mins";
+                    case 2:
+                        return "1 hour";
+                    case 3:
+                        return "2 hours";
+                }
             }
         }
     })

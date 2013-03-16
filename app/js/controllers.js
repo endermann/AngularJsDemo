@@ -19,7 +19,7 @@ function MainMenuController($scope, authenticationService) {
 MainMenuController.$inject = ['$scope', 'authenticationService'];
 
 function EventListController($scope, eventData, $location, eventResource) {
-    $scope.events = eventData.events;
+    $scope.events = eventResource.queryAll();
 
     $scope.navigateToDetails = function (event) {
         $location.url('/event/' + event.id);
@@ -28,12 +28,14 @@ function EventListController($scope, eventData, $location, eventResource) {
 EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
 
-function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService) {
-    $scope.event = _.findWhere(eventData.events, {id:parseInt($routeParams.eventId)});
+function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService, eventResource) {
+    $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
+    console.log($scope.event);
+//    _.findWhere(eventData.events(), {id:parseInt($routeParams.eventId)});
+
     $scope.getDuration = function (duration) {
         return durations.getDuration(duration);
     };
-    //$scope.eventTrack = getDuration(event.duration);
 
     $scope.editEvent = function () {
         $location.url('/events/edit/' + $scope.event.id);
@@ -78,7 +80,7 @@ function EventController($scope, $routeParams, eventData, userData, $location, d
         }
     };
 }
-EventController.$inject = ['$scope', '$routeParams', 'eventData', 'userData', '$location', 'durations', 'authenticationService'];
+EventController.$inject = ['$scope', '$routeParams', 'eventData', 'userData', '$location', 'durations', 'authenticationService', 'eventResource'];
 
 
 function EditEventController($scope, eventData, $location, $routeParams, eventResource, authenticationService) {
