@@ -5,7 +5,7 @@
     <form name="editSessionForm">
         <fieldset>
         <label for="sessionName">Session Name:</label>
-        <input id="sessionName" type="text" required ng-model="session.name">
+        <input id="sessionName" type="text" focus required ng-model="session.name">
         <label for="sessionDuration">Duration:</label>
         <select id="sessionDuration" ng-model="session.duration" ng-Required>
             <option value="1">Half Hour</option>

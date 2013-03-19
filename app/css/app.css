@@ -7,3 +7,7 @@ select, textarea {
   color: #52575c;
 }
 
+.well-title {
+  margin-top: 0px;
+}
+
