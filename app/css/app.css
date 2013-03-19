@@ -3,7 +3,7 @@
   background-color: #52575c;
   cursor: pointer;
 }
-select {
+select, textarea {
   color: #52575c;
 }
 

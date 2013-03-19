@@ -77,11 +77,13 @@ angular.module('eventsApp.services', [])
             getDuration:function (duration) {
                 switch (duration) {
                     case 1:
-                        return "30 mins";
+                        return "Half Hour";
                     case 2:
-                        return "1 hour";
+                        return "1 Hour";
                     case 3:
-                        return "2 hours";
+                        return "Half Day";
+                    case 4:
+                        return "Full Day";
                 }
             }
         }

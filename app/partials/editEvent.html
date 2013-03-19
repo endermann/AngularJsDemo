@@ -2,7 +2,7 @@
     <h1 ng-hide="editingEvent">New Event</h1>
     <h1 ng-show="editingEvent">Edit Event</h1>
     <hr/>
-    <form name="newEventForm">
+    <form name="editEventForm">
         <fieldset>
             <label for="eventName">Event Name:</label>
             <input id="eventName" type="text" required placeholder="Name of your event..." ng-model="event.name" />
@@ -25,7 +25,7 @@
         <br />
         <br />
 
-        <button type="submit" class="btn btn-primary" ng-click="saveEvent(event, newEventForm)">Save</button>
+        <button type="submit" class="btn btn-primary" ng-click="saveEvent(event, editEventForm)">Save</button>
         <button type="button" class="btn btn-default" ng-click="cancelEdit()">Cancel</button>
 
     </form>

@@ -25,7 +25,6 @@ function EventListController($scope, eventData, $location, eventResource) {
 }
 EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
-
 function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService, eventResource) {
     $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
 
@@ -76,7 +75,6 @@ function EventController($scope, $routeParams, eventData, userData, $location, d
     };
 }
 EventController.$inject = ['$scope', '$routeParams', 'eventData', 'userData', '$location', 'durations', 'authenticationService', 'eventResource'];
-
 
 function EditEventController($scope, eventData, $location, $routeParams, eventResource, authenticationService) {
     var event = {};
@@ -130,7 +128,6 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
 }
 EditEventController.$inject = ['$scope', 'eventData', '$location', '$routeParams', 'eventResource', 'authenticationService'];
 
-
 function EditSessionController($scope, eventData, $routeParams, eventResource, $location, authenticationService) {
     if (!authenticationService.isAuthenticated()) {
         $location.url('/login');
@@ -138,13 +135,24 @@ function EditSessionController($scope, eventData, $routeParams, eventResource, $
     }
 
     $scope.editingSession = $location.$$url.indexOf('/sessions/edit') > -1;
+    $scope.session = {};
+
+    if(!$scope.editingSession) {
+        $scope.session.duration = "1";
+    }
+
     $scope.event = eventResource.get({id:parseInt($routeParams.eventId)}, function(event) {
-        $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
+        if($scope.editingSession) {
+            $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
+        }
     });
 
-    $scope.saveSession = function (session) {
+    $scope.saveSession = function (session, form) {
+        if (!form.$valid) return;
+
         session.creator = authenticationService.getCurrentUserName();
         session.creatorName = authenticationService.getCurrentUser().name;
+        session.duration = parseInt(session.duration);
         if (!$scope.editingSession) {
             session.id = eventData.getNextSessionId($scope.event);
             $scope.event.sessions.push(session);
