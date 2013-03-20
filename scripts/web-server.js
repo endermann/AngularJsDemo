@@ -128,7 +128,15 @@ StaticServlet.prototype.findAndSendTarget = function(req, path, res, self) {
             }
             return self.sendDefault_(req, res);
         }
-        if (stat.isDirectory()) {
+
+        if (fs.fileExistsSync(path + ".json")) {
+            return self.findAndSendTarget(req, path + ".json", res, self);
+        }
+
+        var indexOfLastSlash = path.lastIndexOf('/');
+        var indexOfSecondToLastSlash = path.lastIndexOf('/', indexOfLastSlash-1);
+        var secondToLastNode = path.substr(indexOfSecondToLastSlash + 1, indexOfLastSlash-indexOfSecondToLastSlash-1);
+        if (stat.isDirectory() && secondToLastNode != "event" && secondToLastNode != "user") {
             if (path.indexOf('/data/') == -1) {
                 return self.sendDefault_(req, res);
             }
@@ -289,6 +297,16 @@ StaticServlet.prototype.writeFile_ = function (req, res, path) {
     if (req.method === 'HEAD') {
         res.end();
     } else {
+        var targetDir = path.substr(0, path.lastIndexOf('/'));
+        var dirExists;
+        try {
+            var stats = fs.lstatSync(targetDir);
+            dirExists = stats.isDirectory();
+        } catch(e) {dirExists = false;}
+
+        if (!dirExists) {
+            fs.mkdirSyncRecursive(targetDir);
+        }
         var writeStream = fs.createWriteStream(path + ".json");
         req.pipe(writeStream);
 
@@ -364,6 +382,33 @@ StaticServlet.prototype.writeDirectoryIndex_ = function (req, res, path, files) 
     });
     res.write('</ol>');
     res.end();
+};
+
+var path = require('path');
+
+fs.fileExistsSync = function (filePath) {
+    try {
+        var stats = fs.lstatSync(filePath);
+
+        return stats.isFile();
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+fs.mkdirSyncRecursive = function(dirPath) {
+
+    try{
+        fs.mkdirSync(dirPath)
+    } catch(e) {
+        //Create all the parents recursively
+        fs.mkdirSyncRecursive(path.dirname(dirPath));
+        //And then the directory
+        fs.mkdirSyncRecursive(dirPath);
+
+    }
+
 };
 
 // Must be last,
