@@ -277,7 +277,7 @@ StaticServlet.prototype.sendAllJsonFilesAppended_ = function (req, res, path) {
     var results = "[";
     for (var idx = 0; idx < files.length; idx++) {
         if (files[idx].indexOf(".json") == files[idx].length - 5) {
-            results += fs.readFileSync(path + "\\" + files[idx]) + ",";
+            results += fs.readFileSync(path + "/" + files[idx]) + ",";
         }
     }
     results = results.substr(0, results.length - 1);
