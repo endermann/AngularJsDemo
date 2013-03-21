@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eventsApp.services', [])
-    .factory('eventData', ['eventResource', function (eventResource) {
+    .factory('eventData', function () {
     return {
         getNextEventId:function (events) {
             var max = 0;
@@ -22,7 +22,7 @@ angular.module('eventsApp.services', [])
             return max+1;
         }
     };
-}])
+})
     .factory('eventResource', ['$resource', function ($resource) {
     var service = $resource('/data/event/:id', {id:'@id'});
 

@@ -14,18 +14,16 @@ function MainMenuController($scope, authenticationService) {
         authenticationService.setCurrentUser({});
     };
 }
-MainMenuController.$inject = ['$scope', 'authenticationService'];
 
-function EventListController($scope, eventData, $location, eventResource) {
+function EventListController($scope, $location, eventResource) {
     $scope.events = eventResource.queryAll();
 
     $scope.navigateToDetails = function (event) {
         $location.url('/event/' + event.id);
     };
 }
-EventListController.$inject = ['$scope', 'eventData', '$location', 'eventResource'];
 
-function EventController($scope, $routeParams, eventData, userData, $location, durations, authenticationService, eventResource) {
+function EventController($scope, $routeParams, userData, $location, durations, authenticationService, eventResource) {
     $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
 
     $scope.getDuration = function (duration) {
@@ -60,21 +58,18 @@ function EventController($scope, $routeParams, eventData, userData, $location, d
         return _.findWhere(userData.users, {userName:userName}).name;
     };
 
-    $scope.upVoteSession = function(session) {
+    $scope.upVoteSession = function() {
         if (!authenticationService.isAuthenticated()) {
             $location.url('/login');
-            return;
         }
     };
 
-    $scope.downVoteSession = function(session) {
+    $scope.downVoteSession = function() {
         if (!authenticationService.isAuthenticated()) {
             $location.url('/login');
-            return;
         }
     };
 }
-EventController.$inject = ['$scope', '$routeParams', 'eventData', 'userData', '$location', 'durations', 'authenticationService', 'eventResource'];
 
 function EditEventController($scope, eventData, $location, $routeParams, eventResource, authenticationService) {
     var event = {};
@@ -87,10 +82,9 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
     console.log($scope.editingEvent);
 
     if ($scope.editingEvent) {
-        var event = eventResource.get({id:$routeParams.eventId}, function(event) {
+        event = eventResource.get({id:$routeParams.eventId}, function(event) {
             if (authenticationService.getCurrentUserName() != event.creator) {
                 $location.url('/login');
-                return;
             }
         });
     }
@@ -126,7 +120,6 @@ function EditEventController($scope, eventData, $location, $routeParams, eventRe
 
 
 }
-EditEventController.$inject = ['$scope', 'eventData', '$location', '$routeParams', 'eventResource', 'authenticationService'];
 
 function EditSessionController($scope, eventData, $routeParams, eventResource, $location, authenticationService) {
     if (!authenticationService.isAuthenticated()) {
@@ -161,7 +154,6 @@ function EditSessionController($scope, eventData, $routeParams, eventResource, $
         $location.url('/event/' + $routeParams.eventId);
     }
 }
-EditSessionController.$inject = ['$scope', 'eventData', '$routeParams', 'eventResource', '$location', 'authenticationService'];
 
 function EditProfileController($scope, $location, userResource, authenticationService) {
     $scope.user = {};
@@ -193,14 +185,12 @@ function EditProfileController($scope, $location, userResource, authenticationSe
         $location.url('/viewProfile/' + user.userName);
     };
 }
-EditProfileController.$inject = ['$scope', '$location', 'userResource', 'authenticationService'];
 
-function ViewProfileController($scope, $routeParams, userResource, authenticationService) {
+function ViewProfileController($scope, $routeParams, userResource) {
     userResource.get({userName:$routeParams.userName}, function (user) {
         $scope.user = user;
     });
 }
-ViewProfileController.$inject = ['$scope', '$routeParams', 'userResource', 'authenticationService'];
 
 function LoginController($scope, $location, userResource, authenticationService) {
     $scope.user = {userName:"", password:""};
@@ -213,4 +203,3 @@ function LoginController($scope, $location, userResource, authenticationService)
         });
     };
 }
-LoginController.$inject = ['$scope', '$location', 'userResource', 'authenticationService'];
