@@ -1,6 +1,6 @@
 'use strict';
 
-eventsApp.controller('MainMenuController', function() {
+eventsApp.controller('MainMenuController',
     function MainMenuController($scope, authenticationService) {
         $scope.user = {};
         $scope.$watch(authenticationService.getCurrentUserName, function () {
@@ -15,4 +15,4 @@ eventsApp.controller('MainMenuController', function() {
             authenticationService.setCurrentUser({});
         };
     }
-});
+);
