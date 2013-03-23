@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('eventsApp.directives', [])
-    .directive('appVersion', ['version', function (version) {
+eventsApp.directive('appVersion', ['version', function (version) {
         return function (scope, elm, attrs) {
             elm.text(version);
         };
