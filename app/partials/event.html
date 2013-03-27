@@ -30,14 +30,14 @@
 
     <h3>Sessions</h3>
     <ul class="thumbnails">
-        <li ng-repeat="session in event.sessions" class="span11">
-            <div class="row" style="height:110px;">
+        <li ng-repeat="session in event.sessions | orderBy:'-upVoteCount'" class="span11">
+            <div class="row session" style="height:110px;">
                 <div class="span0 well" style="height:100%;">
                     <div style="padding-left:8px; margin-top:20px; cursor:pointer;" ng-click="upVoteSession(session)">
                         <i class="icon-chevron-up icon-white"></i>
                     </div>
                     <div class="badge badge-inverse">
-                        <div>25</div>
+                        <div>{{session.upVoteCount}}</div>
                     </div>
                     <div style="padding-left:8px; cursor:pointer;" ng-click="downVoteSession(session)">
                         <i class="icon-chevron-down"></i>

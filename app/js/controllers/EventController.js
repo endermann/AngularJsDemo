@@ -36,10 +36,11 @@ eventsApp.controller('EventController',
             return _.findWhere(userData.users, {userName:userName}).name;
         };
 
-        $scope.upVoteSession = function() {
+        $scope.upVoteSession = function(session) {
             if (!authenticationService.isAuthenticated()) {
                 $location.url('/login');
             }
+            session.upVoteCount++;
         };
 
         $scope.downVoteSession = function() {

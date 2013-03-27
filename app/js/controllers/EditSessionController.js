@@ -28,6 +28,7 @@ eventsApp.controller('EditSessionController',
             session.duration = parseInt(session.duration);
             if (!$scope.editingSession) {
                 session.id = eventData.getNextSessionId($scope.event);
+                session.upVoteCount = 0;
                 $scope.event.sessions.push(session);
             }
             eventResource.save($scope.event);
