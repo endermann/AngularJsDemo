@@ -43,10 +43,11 @@ eventsApp.controller('EventController',
             session.upVoteCount++;
         };
 
-        $scope.downVoteSession = function() {
+        $scope.downVoteSession = function(session) {
             if (!authenticationService.isAuthenticated()) {
                 $location.url('/login');
             }
+            session.upVoteCount--;
         };
     }
 );
