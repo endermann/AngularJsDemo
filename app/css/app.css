@@ -18,3 +18,8 @@ select, textarea {
     -ms-user-select: none;
     user-select: none;
 }
+
+.votingWidget {
+  height: 64px;
+  padding: 7px;
+}
