@@ -13,8 +13,12 @@
             <option value="3">Half Day</option>
             <option value="4">Full Day</option>
         </select>
-        <label for="sessionTrack">Track:</label>
-        <input id="sessionTrack" type="text" focus required ng-model="session.track">
+        <label for="sessionDuration">Level:</label>
+        <select id="sessionDuration" ng-model="session.level" ng-Required>
+            <option value="introductory">Introductory</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
         <label for="sessionAbstract">Abstract</label>
         <textarea rows="5" id="sessionAbstract" class="field span8" required ng-model="session.abstract" ></textarea>
         </fieldset>
