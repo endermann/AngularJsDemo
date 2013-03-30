@@ -1,12 +1,9 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventController($scope, $routeParams, userData, $location, durations, authenticationService, eventResource) {
+    function EventController($scope, $routeParams, userData, $location, authenticationService, eventResource) {
         $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
 
-        $scope.getDuration = function (duration) {
-            return durations.getDuration(duration);
-        };
 
         $scope.editEvent = function () {
             $location.url('/events/edit/' + $scope.event.id);
