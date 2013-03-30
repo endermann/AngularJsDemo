@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventController($scope, $routeParams) {
+    function EventController($scope) {
         $scope.event = {
             name: 'my event',
             date: '1/1/2013',

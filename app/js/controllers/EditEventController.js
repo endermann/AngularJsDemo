@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('EditEventController',
-    function EditEventController($scope, $location, $routeParams) {
+    function EditEventController($scope, $location) {
 
         $scope.event = {};
 
@@ -12,7 +12,7 @@ eventsApp.controller('EditEventController',
         };
 
         $scope.cancelEdit = function () {
-            $location.url("/EventDetails.html");
+            window.location = "/EventDetails.html";
         };
 
     }
