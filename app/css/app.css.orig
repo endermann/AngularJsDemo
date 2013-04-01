@@ -10,6 +10,9 @@ select, textarea {
 .well-title {
   margin-top: 0px;
 }
+<<<<<<< HEAD
+
+=======
 .session {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -28,3 +31,4 @@ select, textarea {
   padding-left:6px;
   cursor:pointer;
 }
+>>>>>>> master

@@ -2,6 +2,7 @@
 
 eventsApp.controller('EventController',
     function EventController($scope) {
+    	$scope.sortorder = 'name';
         $scope.event = {
             name: 'my event',
             date: '1/1/2013',
@@ -17,15 +18,19 @@ eventsApp.controller('EventController',
                     name: 'Learn to Program',
                     creatorName: 'Bob Martin',
                     duration: '1hr',
-                    abstract: 'In this session you will learn to Program like a champ!'
+                    abstract: 'In this session you will learn to Program like a champ!',
+                    upVoteCount: 0
                 }
             ]
         }
 
-        $scope.upVoteSession = function() {
+        $scope.upVoteSession = function(session) {
+            session.upVoteCount++;
         };
 
-        $scope.downVoteSession = function() {
+
+        $scope.downVoteSession = function(session) {
+            session.upVoteCount--;
         };
     }
 );
