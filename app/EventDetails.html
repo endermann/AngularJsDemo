@@ -60,7 +60,7 @@
                         </div>
                         <div class="well span9" ng-click="navigateToDetails(event)" style=" height:100%; overflow: hidden;">
                             <h4 class="well-title">{{session.name}} <button type="button" class="btn" ng-show="allowUserToEditSession(session)" ng-click="editSession(session)" style="margin-left:10px;">Edit</button></h4>
-                            <h6 style="margin-top:-10px;"><a href="/viewProfile/{{session.creator}}">{{session.creatorName}}</a></h6>
+                            <h6 style="margin-top:-10px;">{{session.creatorName}}</h6>
                             <span>Duration: {{session.duration | durations}}</span><br />
                             <span>Level: {{session.level}}</span>
 
