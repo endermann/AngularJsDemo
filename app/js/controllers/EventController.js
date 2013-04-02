@@ -1,8 +1,8 @@
 'use strict';
 
 eventsApp.controller('EventController',
-    function EventController($scope, $routeParams, userData, $location, authenticationService, eventResource) {
-        $scope.event = eventResource.get({id:parseInt($routeParams.eventId)});
+    function EventController($scope, $routeParams, userData, $location, authService, eventData) {
+        $scope.event = eventData.getEvent(parseInt($routeParams.eventId));
         $scope.sortorder = 'name';
 
         $scope.editEvent = function () {
@@ -14,17 +14,16 @@ eventsApp.controller('EventController',
         };
 
         $scope.createNewSession = function (eventId) {
-            $location.url("/events/" + eventId + "/sessions/new")
+            $location.url("/events/" + eventId + "/sessions/new");
         };
 
         $scope.allowUserToEditEvent = function () {
-            return authenticationService.getCurrentUserName() === $scope.event.creator
+            return authService.getCurrentUserName() === $scope.event.creator;
         };
 
         $scope.allowUserToEditSession = function (session) {
-            return authenticationService.getCurrentUserName() === session.creator
+            return authService.getCurrentUserName() === session.creator;
         };
-
 
         $scope.getSessionCreatorName = function (userName) {
             if (!userName) {
@@ -34,14 +33,14 @@ eventsApp.controller('EventController',
         };
 
         $scope.upVoteSession = function(session) {
-            if (!authenticationService.isAuthenticated()) {
+            if (!authService.isAuthenticated()) {
                 $location.url('/login');
             }
             session.upVoteCount++;
         };
 
         $scope.downVoteSession = function(session) {
-            if (!authenticationService.isAuthenticated()) {
+            if (!authService.isAuthenticated()) {
                 $location.url('/login');
             }
             session.upVoteCount--;

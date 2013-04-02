@@ -1,6 +1,6 @@
 'use strict';
 
-eventsApp.factory('authenticationService', function () {
+eventsApp.factory('authService', function () {
     var currentUser = {};
 
     function cloneObject(object) {
@@ -19,6 +19,10 @@ eventsApp.factory('authenticationService', function () {
         },
         isAuthenticated:function() {
             return !!currentUser && !!currentUser.userName;
+        },
+        userCanEditEvent: function(event) {
+            return this.getCurrentUserName() == event.creator;
         }
+
     };
 })

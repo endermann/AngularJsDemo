@@ -1,16 +1,16 @@
 'use strict';
 
 eventsApp.controller('EditProfileController',
-    function EditProfileController($scope, $location, userResource, authenticationService) {
+    function EditProfileController($scope, $location, userResource, authService) {
         $scope.user = {};
         $scope.$watch(function () {
-            return authenticationService.getCurrentUserName();
+            return authService.getCurrentUserName();
         }, function () {
-            $scope.user = authenticationService.getCurrentUser();
+            $scope.user = authService.getCurrentUser();
         });
 
         $scope.isAuthenticated = function () {
-            return authenticationService.isAuthenticated();
+            return authService.isAuthenticated();
         };
 
         $scope.registerUser = function (user, form) {
@@ -18,7 +18,7 @@ eventsApp.controller('EditProfileController',
                 return;
             }
             userResource.save(user);
-            authenticationService.setCurrentUser(user);
+            authService.setCurrentUser(user);
             $location.url('/viewProfile/' + user.userName);
         };
 
@@ -27,7 +27,7 @@ eventsApp.controller('EditProfileController',
                 return;
             }
             userResource.save(user);
-            authenticationService.setCurrentUser(user);
+            authService.setCurrentUser(user);
             $location.url('/viewProfile/' + user.userName);
         };
     }
