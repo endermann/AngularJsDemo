@@ -26,7 +26,7 @@ eventsApp.controller('EventController',
                     name: 'Scopes for fun and profit',
                     creatorName: 'John Doe',
                     duration: 3,
-                    level: 'Beginner',
+                    level: 'Introductory',
                     abstract: 'This session will take a closer look at scopes.  Learn what they do, how they do it, and how to get them to do it for you.',
                     upVoteCount: 0
                 },
