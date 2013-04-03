@@ -14,11 +14,7 @@ eventsApp.controller('EditSessionController',
             $scope.session.duration = "1";
         }
 
-        $scope.event = eventData.getEvent(parseInt($routeParams.eventId).then(function(event) {
-            if($scope.editingSession) {
-                $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
-            }
-        }));
+        $scope.event = eventData.getEvent($routeParams.eventId, setSession);
 
         $scope.saveSession = function (session, form) {
             if (!form.$valid) return;
@@ -33,6 +29,12 @@ eventsApp.controller('EditSessionController',
             }
             eventData.save($scope.event);
             $location.url('/event/' + $routeParams.eventId);
+        }
+
+        function setSession(event) {
+            if($scope.editingSession) {
+                $scope.session = _.findWhere(event.sessions, {id:$routeParams.sessionId});
+            }
         }
     }
 );

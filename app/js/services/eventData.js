@@ -22,12 +22,15 @@ eventsApp.factory('eventData', function (eventResource, authService, $q) {
             return max+1;
         },
         save: function(event) {
-            eventResource.queryAll(function(events) {
-                event.creator = authService.getCurrentUserName();
-                event.id = getNextEventId(events);
-                event.sessions = [];
-                eventResource.save(event);
-            });
+            if (!event.id) {
+                eventResource.queryAll(function(events) {
+                    event.creator = authService.getCurrentUserName();
+                    event.id = getNextEventId(events);
+                    event.sessions = [];
+                    console.log(event);
+                });
+            }
+            eventResource.save(event);
         }
     };
 

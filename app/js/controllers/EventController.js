@@ -2,7 +2,7 @@
 
 eventsApp.controller('EventController',
     function EventController($scope, $routeParams, userData, $location, authService, eventData) {
-        $scope.event = eventData.getEvent(parseInt($routeParams.eventId));
+        $scope.event = eventData.getEvent($routeParams.eventId);
         $scope.sortorder = 'name';
 
         $scope.editEvent = function () {
