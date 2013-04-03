@@ -14,10 +14,12 @@ eventsApp.controller('EventController',
         };
 
         $scope.createNewSession = function (eventId) {
+            console.log( $scope.event.creator);
             $location.url("/events/" + eventId + "/sessions/new");
         };
 
         $scope.allowUserToEditEvent = function () {
+            console.log(authService.getCurrentUserName(), $scope.event.creator);
             return authService.getCurrentUserName() === $scope.event.creator;
         };
 

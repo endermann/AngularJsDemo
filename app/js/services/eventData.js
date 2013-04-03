@@ -1,13 +1,13 @@
 'use strict';
 
-eventsApp.factory('eventData', function (eventResource, authService) {
+eventsApp.factory('eventData', function (eventResource, authService, $q) {
     return {
-        getEvent: function(eventId, callback) {
-            return eventResource.get({id:eventId}, function(event) {
-                if (callback)
-                    callback(event);
-                return event;
+        getEvent: function(eventId) {
+            var deferred = $q.defer();
+            eventResource.get({id:eventId}, function(event) {
+                deferred.resolve(event);
             });
+            return deferred.promise;
         },
         getAllEvents: function(callback) {
             return eventResource.queryAll(callback);

@@ -14,11 +14,11 @@ eventsApp.controller('EditSessionController',
             $scope.session.duration = "1";
         }
 
-        $scope.event = eventData.getEvent(parseInt($routeParams.eventId), function(event) {
+        $scope.event = eventData.getEvent(parseInt($routeParams.eventId).then(function(event) {
             if($scope.editingSession) {
                 $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
             }
-        });
+        }));
 
         $scope.saveSession = function (session, form) {
             if (!form.$valid) return;
