@@ -19,7 +19,8 @@ eventsApp.controller('EventController',
         };
 
         $scope.allowUserToEditEvent = function () {
-            console.log(authService.getCurrentUserName(), $scope.event.creator);
+//            console.log(authService.getCurrentUserName(), $scope.event.creator);
+//            console.log($scope.event);
             return authService.getCurrentUserName() === $scope.event.creator;
         };
 
