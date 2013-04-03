@@ -2,15 +2,12 @@
 
 eventsApp.factory('eventData', function (eventResource, authService, $q) {
     return {
-        getEvent: function(eventId) {
-//            var deferred = $q.defer();
-            var r = eventResource.get({id:eventId}, function(event) {
-//                deferred.resolve(event);
+        getEvent: function(eventId, callback) {
+            return eventResource.get({id:eventId}, function(event) {
+                if (callback)
+                    callback(event);
+                return event;
             });
-//            console.log('hi');
-//            console.log(r);
-//            return deferred.promise;
-            return r;
         },
         getAllEvents: function(callback) {
             return eventResource.queryAll(callback);
