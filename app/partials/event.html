@@ -1,26 +1,6 @@
 <div id="me">
-    <img data-ng-src="{{event.imageUrl}}" alt="{{event.name}}"/>
+    <event-details event="event" editable="allowUserToEditEvent()" edit="editEvent(event)"></event-details>
 
-    <div class="row">
-        <div class="span11">
-            <h2>{{event.name}}
-                <button type="button" class="btn" ng-show="allowUserToEditEvent()" ng-click="editEvent()">Edit</button>
-            </h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span3">
-            <div><strong>Date:</strong> {{event.date}}</div>
-            <div><strong>Time:</strong> {{event.time}}</div>
-        </div>
-        <div class="span4">
-            <address>
-                <strong>Address:</strong><br/>
-                {{event.location.address}}<br/>
-                {{event.location.city}}, {{event.location.province}}
-            </address>
-        </div>
-    </div>
     <button type="button" style="margin-top:25px" class="btn btn-primary" ng-click="createNewSession(event.id)">Create
         New Session
     </button>
@@ -43,25 +23,8 @@
     <ul class="thumbnails">
         <li ng-repeat="session in event.sessions | filter:query | orderBy:sortorder" class="span11">
             <div class="row session">
-                <div class="span0 well votingWidget">
-                    <div class="votingButton" ng-click="upVoteSession(session)">
-                        <i class="icon-chevron-up icon-white"></i>
-                    </div>
-                    <div class="badge badge-inverse">
-                        <div>{{session.upVoteCount}}</div>
-                    </div>
-                    <div class="votingButton" ng-click="downVoteSession(session)">
-                        <i class="icon-chevron-down"></i>
-                    </div>
-                </div>
-                <div class="well span9" ng-click="navigateToDetails(event)" style=" height:100%; overflow: hidden;">
-                    <h4 class="well-title">{{session.name}} <button type="button" class="btn" ng-show="allowUserToEditSession(session)" ng-click="editSession(session)" style="margin-left:10px;">Edit</button></h4>
-                    <h6 style="margin-top:-10px;"><a href="/viewProfile/{{session.creator}}">{{session.creatorName}}</a></h6>
-                    <span>Duration: {{session.duration | durations}}</span><br />
-                    <span>Level: {{session.level}}</span>
-
-                    <p>{{session.abstract}}</p>
-                </div>
+                <upvote count="{{session.upVoteCount}}" upvote="upVoteSession(session)" downvote="downVoteSession(session)"></upvote>
+                <session-thumbnail session="session" editable="allowUserToEditSession(session)" edit="editSession(session)"></session-thumbnail>
             </div>
         </li>
     </ul>

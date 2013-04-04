@@ -5,8 +5,8 @@ eventsApp.controller('EventController',
         $scope.event = eventData.getEvent($routeParams.eventId);
         $scope.sortorder = 'name';
 
-        $scope.editEvent = function () {
-            $location.url('/events/edit/' + $scope.event.id);
+        $scope.editEvent = function (event) {
+            $location.url('/events/edit/' + event.id);
         };
 
         $scope.editSession = function (session) {

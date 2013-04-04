@@ -34,4 +34,35 @@ eventsApp
                 angular.element(element).focus();
                 }
             };
+    })
+    .directive('eventDetails', function() {
+        return {
+            restrict:"E",
+            templateUrl:"/partials/directives/eventDetails.html",
+            scope: {
+                event: '=',
+                editable: '=',
+                edit: '&'
+            }
+        }
+    }).directive('sessionThumbnail', function() {
+        return {
+            restrict:"E",
+            templateUrl:"/partials/directives/sessionThumbnail.html",
+            scope: {
+                session: '=',
+                editable: '=',
+                edit: '&'
+            }
+        }
+    }).directive('upvote', function() {
+        return {
+            restrict:"E",
+            templateUrl:"/partials/directives/upvote.html",
+            scope: {
+                count: '@',
+                upvote: '&',
+                downvote: '&'
+            }
+        }
     });

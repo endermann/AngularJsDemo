@@ -18,7 +18,16 @@ select, textarea {
     -ms-user-select: none;
     user-select: none;
 }
-
+.sessionThumbnail {
+    height:100%;
+    overflow: hidden;
+}
+.editSessionBtn {
+    margin-left:10px;
+}
+.sessionCreator {
+    margin-top:-10px;
+}
 .votingWidget {
   height: 64px;
   padding: 7px;
