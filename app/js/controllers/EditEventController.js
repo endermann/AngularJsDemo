@@ -25,7 +25,7 @@ eventsApp.controller('EditEventController',
         };
 
         function setEventOrRedirectIfNotAuthorized(event)  {
-            if (authService.userCanEditEvent) {
+            if (authService.userCanEditEvent(event)) {
                 $scope.event = event;
             } else {
                 $location.url('/login');
