@@ -17,11 +17,7 @@ eventsApp.controller('EditEventController',
         $scope.saveEvent = function (event, form) {
             if (!form.$valid) return;
 
-            if ($scope.editingEvent) {
-                saveEvent(event);
-            } else {
-                saveNewEvent(event);
-            }
+            eventData.save(event, function() { $location.url('/event/' + event.id); });
         };
 
         $scope.cancelEdit = function () {
@@ -35,16 +31,5 @@ eventsApp.controller('EditEventController',
                 $location.url('/login');
             }
         }
-
-        function saveNewEvent(event) {
-            eventData.saveEvent(event);
-        }
-
-        function saveEvent(event) {
-            eventData.save(event);
-            $location.url('/event/' + event.id)
-        }
-
-
     }
 );

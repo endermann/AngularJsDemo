@@ -1,10 +1,6 @@
 'use strict';
 
-eventsApp.directive('appVersion', ['version', function (version) {
-        return function (scope, elm, attrs) {
-            elm.text(version);
-        };
-    }])
+eventsApp
     .directive('gravatar', ['gravatarUrlBuilder', function (gravatarUrlBuilder) {
         return {
             restrict:"A",

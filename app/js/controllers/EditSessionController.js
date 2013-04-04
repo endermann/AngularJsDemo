@@ -16,6 +16,7 @@ eventsApp.controller('EditSessionController',
 
         $scope.event = eventData.getEvent($routeParams.eventId, setSession);
 
+
         $scope.saveSession = function (session, form) {
             if (!form.$valid) return;
 
@@ -33,7 +34,7 @@ eventsApp.controller('EditSessionController',
 
         function setSession(event) {
             if($scope.editingSession) {
-                $scope.session = _.findWhere(event.sessions, {id:$routeParams.sessionId});
+                $scope.session = _.findWhere(event.sessions, {id:parseInt($routeParams.sessionId)});
             }
         }
     }
