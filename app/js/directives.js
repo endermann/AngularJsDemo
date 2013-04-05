@@ -35,6 +35,16 @@ eventsApp
                 }
             };
     })
+    .directive('eventThumbnail', function() {
+        return {
+            restrict:"E",
+            templateUrl:"/partials/directives/eventThumbnail.html",
+            scope: {
+                event: '=',
+                showDetails: '&'
+            }
+        }
+    })
     .directive('eventDetails', function() {
         return {
             restrict:"E",
