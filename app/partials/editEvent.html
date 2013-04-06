@@ -6,7 +6,7 @@
     <form name="editEventForm">
         <fieldset>
             <label for="eventName">Event Name:</label>
-            <input id="eventName" type="text" required placeholder="Name of your event..." ng-model="event.name" />
+            <input id="eventName" type="text" required placeholder="Name of your event..." ng-model="event.name" focus />
             <label for="eventDate">Date:</label>
             <div style="position:relative">
                 <input id="eventDate" type="text" required placeholder="format (mm/dd/yyyy)..." ng-model="event.date" ng-focus="dateFocus()" ng-blur="dateBlur()"/>
