@@ -20,7 +20,7 @@
     </select>
     <ul class="thumbnails">
         <li ng-repeat="session in event.sessions | filter:query | orderBy:sortorder" class="span11">
-            <div class="row session">
+            <div class="row no-select">
                 <upvote count="{{session.upVoteCount}}" upvote="upVoteSession(session)" downvote="downVoteSession(session)"></upvote>
                 <session-thumbnail session="session" editable="allowUserToEditSession(session)" edit="editSession(session)"></session-thumbnail>
             </div>
