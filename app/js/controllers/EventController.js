@@ -12,7 +12,7 @@ eventsApp.controller('EventController',
                 city: 'Mountain View',
                 province: 'CA'
             },
-            imageUrl: 'http://pascalprecht.github.com/slides/angularjs-insights/img/angularjs-logo.png',
+            imageUrl: '/img/angularjs-logo.png',
             sessions: [
                 {
                     name: 'Directives Masterclass',
