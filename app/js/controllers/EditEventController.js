@@ -7,11 +7,7 @@ eventsApp.controller('EditEventController',
 
         $scope.saveEvent = function (event, form) {
             if(form.$valid) {
-                eventData.save(event)
-                    .then(
-                        function(response) { console.log('success', response)},
-                        function(response) { console.log('failure', response)}
-                    );
+                eventData.save(event);
             }
         };
 
