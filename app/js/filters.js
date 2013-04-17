@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 eventsApp.filter('durations', function() {
     return function(duration) {
         switch (duration) {
