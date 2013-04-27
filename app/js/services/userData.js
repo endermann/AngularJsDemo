@@ -1,4 +1,4 @@
-'use strict';
+    'use strict';
 
 eventsApp.factory('userData', ['userResource', function (userResource) {
     return {
