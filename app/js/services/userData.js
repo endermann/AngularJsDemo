@@ -1,6 +1,7 @@
     'use strict';
 
 eventsApp.factory('userData', ['userResource', function (userResource) {
+//    debugger;
     return {
         getUser:function(userName, callback) {
             return userResource.get({userName:userName}, function (user) {
