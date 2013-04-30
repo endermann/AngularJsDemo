@@ -2,11 +2,13 @@
 
 eventsApp.directive('gravatar', ['gravatarUrlBuilder', function (gravatarUrlBuilder) {
     return {
-        restrict: "A",
+        restrict: 'E',
+        template: '<img />',
+        replace: true,
         link: function (scope, element, attrs) {
-            attrs.$observe('gravatar', function (newValue, oldValue) {
+            attrs.$observe('email', function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    element.attr('src', gravatarUrlBuilder.buildUrlForEmail(newValue));
+                    attrs.$set('src', gravatarUrlBuilder.buildUrlForEmail(newValue));
                 }
             });
         }
