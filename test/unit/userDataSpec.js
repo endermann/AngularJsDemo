@@ -1,6 +1,6 @@
 'use strict';
 
-xdescribe('userData', function() {
+describe('userData', function() {
     var userDataSvc, mockUserResource;
 
     beforeEach(module('eventsApp'));

@@ -1,36 +1,33 @@
 'use strict';
 
-/* jasmine specs for directives go here */
-
 describe('eventThumbnail', function() {
-    var $httpBackend, el, el2;
+    var el, stubNavigateToDetails;
 
     beforeEach(module('eventsApp'));
+    beforeEach(module('partials/directives/eventThumbnail.html'));
 
-    beforeEach(module('partials/directives/eventThumbnail.html'))
+    beforeEach(inject(function($compile, $rootScope) {
+        // set up scope
+        var scope = $rootScope;
+        scope.event = {name: 'Event Name', date: '223', time: '334', location: {address: '1231', city: '1414', province: '1515'}};
+        stubNavigateToDetails = sinon.stub();
+        scope.navigateToDetails = stubNavigateToDetails;
 
-    beforeEach(inject(function($compile, $rootScope, $injector) {
-        $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('GET', '/partials/directives/eventThumbnail.html').respond('<div class="replacement" ng-click="showDetails()">{{event.name}}</div>');
-
-        var scope = $rootScope.$new();
-
-        scope.event = {name: 'Event Name'};
-        scope.navigateToDetails = function() { console.log('hi'); }
-
+        // create and compile directive
         el = angular.element('<event-thumbnail event="event" show-details="navigateToDetails(event)"/>');
         $compile(el)(scope);
-        $httpBackend.flush();
         scope.$digest();
     }));
 
     it('should bind to the scope\'s event', function() {
-        expect(el.text()).toEqual('Event Name');
+        el.click();
 
-        var ch = el.children();
-        ch.click();
+        expect(stubNavigateToDetails.called).toBe(true);
+    });
 
-
-        console.log('outer html: ' + el[0].outerHTML);
+    it('should bind the data', function() {
+        expect(el.text()).toContain('Event Name');
+        expect(el.text()).not.toContain('{{');
+        expect(el.find('.row').eq(3).text()).toContain('Location: 1231');
     });
 });
